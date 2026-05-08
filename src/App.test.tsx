@@ -47,7 +47,7 @@ describe('M0 routes', () => {
 
   it.each([
     ['/search?q=라떼', '라떼'],
-    ['/beans/sample-bean', 'sample-bean'],
+    ['/beans/fritz-daily-blend', '데일리 블렌드'],
     ['/compare', '원두 비교'],
     ['/categories/daily', 'daily'],
     ['/rankings/value', 'value'],

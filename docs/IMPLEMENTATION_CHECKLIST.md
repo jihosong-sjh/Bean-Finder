@@ -32,9 +32,9 @@
 
 | 항목 | 값 |
 | --- | --- |
-| 현재 마일스톤 | M3 |
+| 현재 마일스톤 | M4 |
 | 전체 작업 수 | 101 |
-| 완료 작업 수 | 37 |
+| 완료 작업 수 | 58 |
 | 진행 중 작업 수 | 0 |
 | 블로커 수 | 0 |
 | 마지막 업데이트 | 2026-05-08 |
@@ -44,8 +44,8 @@
 - [x] M0 프로젝트 기반 준비
 - [x] M1 데이터 기반 구축
 - [x] M2 검색 도메인 구현
-- [ ] M3 API 계층 구현
-- [ ] M4 핵심 화면 구현
+- [x] M3 API 계층 구현
+- [x] M4 핵심 화면 구현
 - [ ] M5 비교, 카테고리, 랭킹 구현
 - [ ] M6 이벤트, 오류, UX 보강
 - [ ] M7 테스트와 품질 보강
@@ -57,36 +57,20 @@
 
 | ID | 작업 | 상태 | 담당 | 메모 |
 | --- | --- | --- | --- | --- |
-| IMP-008 | `Bean`, `Roastery`, `TastingNote`, `Category`, `Ranking` 타입 정의 | 완료 | Codex | `src/features/*/*.types.ts` |
-| IMP-009 | JSON 데이터 파일 구조 생성 | 완료 | Codex | `data/*.json` |
-| IMP-010 | 샘플 로스터리 데이터 작성 | 완료 | Codex | 5개 로스터리 |
-| IMP-011 | 샘플 컵노트 사전 작성 | 완료 | Codex | 18개 표준 컵노트 |
-| IMP-012 | 샘플 원두 30-50개 작성 | 완료 | Codex | 30개 원두, 필수 케이스 포함 |
-| IMP-013 | 카테고리 JSON 작성 | 완료 | Codex | 9개 MVP 카테고리 |
-| IMP-014 | 랭킹 JSON 작성 | 완료 | Codex | 7개 MVP 랭킹 |
-| IMP-015 | 데이터 검증 schema 작성 | 완료 | Codex | Zod schema |
-| IMP-016 | 데이터 검증 스크립트 작성 | 완료 | Codex | `npm run validate:data` |
-| IMP-017 | `price_per_100g` 계산 함수 작성 | 완료 | Codex | repository enrichment에서 계산 |
-| IMP-018 | `easy_taste_tags` 생성 함수 작성 | 완료 | Codex | 점수/컵노트/추출방식 기반 생성 |
-| IMP-019 | `search_text` 생성 함수 작성 | 완료 | Codex | 검색 대상 필드 정규화 |
-| IMP-020 | 데이터 로딩 repository 작성 | 완료 | Codex | `loadBeanData`, `findBeanById` |
-| IMP-021 | 검색 query 정규화 함수 작성 | 완료 | Codex | `normalizeSearchQuery` |
-| IMP-022 | 쉬운 검색어 조건 매핑 구현 | 완료 | Codex | `mapEasySearchQueryToFilters` |
-| IMP-023 | 텍스트 검색 점수 계산 구현 | 완료 | Codex | 가중치 기반 `calculateTextSearchScore` |
-| IMP-024 | 필터 적용 함수 구현 | 완료 | Codex | 그룹 AND, 내부 OR |
-| IMP-025 | 정렬 함수 구현 | 완료 | Codex | `sortBeans` |
-| IMP-026 | 추천 점수 계산 구현 | 완료 | Codex | 기능 명세 공식 적용 |
-| IMP-027 | 페이지네이션 구현 | 완료 | Codex | `paginateItems` |
-| IMP-028 | 검색 결과 BeanCard mapper 구현 | 완료 | Codex | `mapBeanToCard` |
-| IMP-029 | 카테고리 조건 병합 함수 구현 | 완료 | Codex | `mergeCategoryFilters` |
-| IMP-030 | 랭킹 계산 함수 구현 | 완료 | Codex | `calculateRankingBeans` |
-| IMP-031 | 유사 원두 계산 함수 구현 | 완료 | Codex | `calculateSimilarBeans` |
-| IMP-032 | 공통 API 성공/오류 응답 helper 작성 | 완료 | Codex | `src/api/api.response.ts` |
-| IMP-033 | `GET /api/v1/home` 구현 | 완료 | Codex | `getHomeApi` |
-| IMP-034 | `GET /api/v1/beans/search` 구현 | 완료 | Codex | `getBeansSearchApi` |
-| IMP-035 | `GET /api/v1/beans/{beanId}` 구현 | 완료 | Codex | `getBeanDetailApi` |
-| IMP-036 | `GET /api/v1/beans/batch` 구현 | 완료 | Codex | `getBeansBatchApi` |
-| IMP-037 | `GET /api/v1/beans/{beanId}/similar` 구현 | 완료 | Codex | `getBeanSimilarApi` |
+| IMP-045 | 공통 검색 입력 컴포넌트 구현 | 완료 | Codex | `SearchInput` |
+| IMP-046 | 원두 카드 컴포넌트 구현 | 완료 | Codex | `BeanCard` |
+| IMP-047 | 맛 점수 컴포넌트 구현 | 완료 | Codex | `TasteScore` |
+| IMP-048 | 가격 표시 formatter 구현 | 완료 | Codex | `price-format.ts` |
+| IMP-049 | 홈 화면 구현 | 완료 | Codex | `getHomeApi` 연결 |
+| IMP-050 | 검색 결과 화면 레이아웃 구현 | 완료 | Codex | 검색 API 연결 |
+| IMP-051 | 필터 패널 구현 | 완료 | Codex | URL query 기반 |
+| IMP-052 | 정렬 선택 구현 | 완료 | Codex | `sort` query 기반 |
+| IMP-053 | 적용 필터 chip 구현 | 완료 | Codex | 개별 제거/초기화 |
+| IMP-054 | 더 보기 pagination 구현 | 완료 | Codex | `limit` 증가 방식 |
+| IMP-055 | 빈 결과 상태 구현 | 완료 | Codex | 검색 결과 없음 상태 |
+| IMP-056 | 원두 상세 화면 구현 | 완료 | Codex | 상세 API 연결 |
+| IMP-057 | 유사 원두 영역 구현 | 완료 | Codex | similar API 연결 |
+| IMP-058 | 판매처 이동 버튼 구현 | 완료 | Codex | 새 탭 및 이벤트 stub 호출 |
 
 ## 5. 블로커 로그
 
@@ -210,28 +194,28 @@
 
 | 완료 | ID | 우선순위 | 작업 | 상태 |
 | --- | --- | --- | --- | --- |
-| [ ] | IMP-045 | P0 | 공통 검색 입력 컴포넌트 구현 | 대기 |
-| [ ] | IMP-046 | P0 | 원두 카드 컴포넌트 구현 | 대기 |
-| [ ] | IMP-047 | P0 | 맛 점수 컴포넌트 구현 | 대기 |
-| [ ] | IMP-048 | P0 | 가격 표시 formatter 구현 | 대기 |
-| [ ] | IMP-049 | P0 | 홈 화면 구현 | 대기 |
-| [ ] | IMP-050 | P0 | 검색 결과 화면 레이아웃 구현 | 대기 |
-| [ ] | IMP-051 | P0 | 필터 패널 구현 | 대기 |
-| [ ] | IMP-052 | P0 | 정렬 선택 구현 | 대기 |
-| [ ] | IMP-053 | P1 | 적용 필터 chip 구현 | 대기 |
-| [ ] | IMP-054 | P0 | 더 보기 pagination 구현 | 대기 |
-| [ ] | IMP-055 | P0 | 빈 결과 상태 구현 | 대기 |
-| [ ] | IMP-056 | P0 | 원두 상세 화면 구현 | 대기 |
-| [ ] | IMP-057 | P1 | 유사 원두 영역 구현 | 대기 |
-| [ ] | IMP-058 | P0 | 판매처 이동 버튼 구현 | 대기 |
+| [x] | IMP-045 | P0 | 공통 검색 입력 컴포넌트 구현 | 완료 |
+| [x] | IMP-046 | P0 | 원두 카드 컴포넌트 구현 | 완료 |
+| [x] | IMP-047 | P0 | 맛 점수 컴포넌트 구현 | 완료 |
+| [x] | IMP-048 | P0 | 가격 표시 formatter 구현 | 완료 |
+| [x] | IMP-049 | P0 | 홈 화면 구현 | 완료 |
+| [x] | IMP-050 | P0 | 검색 결과 화면 레이아웃 구현 | 완료 |
+| [x] | IMP-051 | P0 | 필터 패널 구현 | 완료 |
+| [x] | IMP-052 | P0 | 정렬 선택 구현 | 완료 |
+| [x] | IMP-053 | P1 | 적용 필터 chip 구현 | 완료 |
+| [x] | IMP-054 | P0 | 더 보기 pagination 구현 | 완료 |
+| [x] | IMP-055 | P0 | 빈 결과 상태 구현 | 완료 |
+| [x] | IMP-056 | P0 | 원두 상세 화면 구현 | 완료 |
+| [x] | IMP-057 | P1 | 유사 원두 영역 구현 | 완료 |
+| [x] | IMP-058 | P0 | 판매처 이동 버튼 구현 | 완료 |
 
 완료 기준:
 
-- [ ] 홈에서 검색어 입력 후 검색 결과로 이동한다.
-- [ ] 검색 결과에서 필터와 정렬을 사용할 수 있다.
-- [ ] 원두 카드에 가격, 용량, 100g당 가격, 산미, 바디감이 표시된다.
-- [ ] 원두 카드 클릭 시 상세 화면으로 이동한다.
-- [ ] 상세 화면에서 맛 프로필과 판매처 이동 버튼이 표시된다.
+- [x] 홈에서 검색어 입력 후 검색 결과로 이동한다.
+- [x] 검색 결과에서 필터와 정렬을 사용할 수 있다.
+- [x] 원두 카드에 가격, 용량, 100g당 가격, 산미, 바디감이 표시된다.
+- [x] 원두 카드 클릭 시 상세 화면으로 이동한다.
+- [x] 상세 화면에서 맛 프로필과 판매처 이동 버튼이 표시된다.
 
 ## 12. M5 비교, 카테고리, 랭킹 구현
 

@@ -33,7 +33,7 @@ import type { ZodIssue } from 'zod';
 type QueryValue = string | number | boolean | string[] | undefined;
 type QueryInput = URLSearchParams | Record<string, QueryValue>;
 
-type HomeResponse = {
+export type HomeResponse = {
   suggested_queries: string[];
   featured_categories: Array<{
     key: string;
@@ -68,17 +68,17 @@ type RankingBean = {
   bean: BeanCard;
 };
 
-type FilterOption = {
+export type FilterOption = {
   key: string;
   label: string;
   count: number | null;
 };
 
-type TastingNoteFilterOption = FilterOption & {
+export type TastingNoteFilterOption = FilterOption & {
   group: TastingNoteGroup;
 };
 
-type FilterOptionsResponse = {
+export type FilterOptionsResponse = {
   price_ranges: FilterOption[];
   acidity: FilterOption[];
   body: FilterOption[];
@@ -122,7 +122,7 @@ type ValidateBeansResponse = {
   results: BeanValidationResult[];
 };
 
-type BeanDetail = {
+export type BeanDetail = {
   id: string;
   slug: string;
   name: string;
