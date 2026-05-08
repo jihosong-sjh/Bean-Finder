@@ -32,9 +32,9 @@
 
 | 항목 | 값 |
 | --- | --- |
-| 현재 마일스톤 | M2 |
+| 현재 마일스톤 | M3 |
 | 전체 작업 수 | 101 |
-| 완료 작업 수 | 31 |
+| 완료 작업 수 | 37 |
 | 진행 중 작업 수 | 0 |
 | 블로커 수 | 0 |
 | 마지막 업데이트 | 2026-05-08 |
@@ -81,6 +81,12 @@
 | IMP-029 | 카테고리 조건 병합 함수 구현 | 완료 | Codex | `mergeCategoryFilters` |
 | IMP-030 | 랭킹 계산 함수 구현 | 완료 | Codex | `calculateRankingBeans` |
 | IMP-031 | 유사 원두 계산 함수 구현 | 완료 | Codex | `calculateSimilarBeans` |
+| IMP-032 | 공통 API 성공/오류 응답 helper 작성 | 완료 | Codex | `src/api/api.response.ts` |
+| IMP-033 | `GET /api/v1/home` 구현 | 완료 | Codex | `getHomeApi` |
+| IMP-034 | `GET /api/v1/beans/search` 구현 | 완료 | Codex | `getBeansSearchApi` |
+| IMP-035 | `GET /api/v1/beans/{beanId}` 구현 | 완료 | Codex | `getBeanDetailApi` |
+| IMP-036 | `GET /api/v1/beans/batch` 구현 | 완료 | Codex | `getBeansBatchApi` |
+| IMP-037 | `GET /api/v1/beans/{beanId}/similar` 구현 | 완료 | Codex | `getBeanSimilarApi` |
 
 ## 5. 블로커 로그
 
@@ -177,12 +183,12 @@
 
 | 완료 | ID | 우선순위 | 작업 | 상태 |
 | --- | --- | --- | --- | --- |
-| [ ] | IMP-032 | P0 | 공통 API 성공/오류 응답 helper 작성 | 대기 |
-| [ ] | IMP-033 | P0 | `GET /api/v1/home` 구현 | 대기 |
-| [ ] | IMP-034 | P0 | `GET /api/v1/beans/search` 구현 | 대기 |
-| [ ] | IMP-035 | P0 | `GET /api/v1/beans/{beanId}` 구현 | 대기 |
-| [ ] | IMP-036 | P0 | `GET /api/v1/beans/batch` 구현 | 대기 |
-| [ ] | IMP-037 | P1 | `GET /api/v1/beans/{beanId}/similar` 구현 | 대기 |
+| [x] | IMP-032 | P0 | 공통 API 성공/오류 응답 helper 작성 | 완료 |
+| [x] | IMP-033 | P0 | `GET /api/v1/home` 구현 | 완료 |
+| [x] | IMP-034 | P0 | `GET /api/v1/beans/search` 구현 | 완료 |
+| [x] | IMP-035 | P0 | `GET /api/v1/beans/{beanId}` 구현 | 완료 |
+| [x] | IMP-036 | P0 | `GET /api/v1/beans/batch` 구현 | 완료 |
+| [x] | IMP-037 | P1 | `GET /api/v1/beans/{beanId}/similar` 구현 | 완료 |
 | [ ] | IMP-038 | P1 | `GET /api/v1/categories` 구현 | 대기 |
 | [ ] | IMP-039 | P1 | `GET /api/v1/categories/{categoryKey}/beans` 구현 | 대기 |
 | [ ] | IMP-040 | P1 | `GET /api/v1/rankings` 구현 | 대기 |
@@ -193,10 +199,10 @@
 
 완료 기준:
 
-- [ ] API 응답은 `data`와 `meta.request_id`를 포함한다.
-- [ ] 목록 API는 pagination을 포함한다.
-- [ ] 오류 응답은 공통 오류 형식을 따른다.
-- [ ] 핵심 API 테스트가 통과한다.
+- [x] API 응답은 `data`와 `meta.request_id`를 포함한다.
+- [x] 목록 API는 pagination을 포함한다.
+- [x] 오류 응답은 공통 오류 형식을 따른다.
+- [x] 핵심 API 테스트가 통과한다.
 
 ## 11. M4 핵심 화면 구현
 

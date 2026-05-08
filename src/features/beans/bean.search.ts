@@ -31,6 +31,7 @@ export type SortKey =
 
 export type SearchFilters = {
   price_range?: PriceRange | PriceRange[];
+  price_min?: number;
   price_per_100g_min?: number;
   price_per_100g_max?: number;
   price_max?: number;
@@ -321,6 +322,13 @@ export function applyBeanFilters(
     }
 
     if (!matchesPriceRange(bean, normalizedFilters.price_range)) {
+      return false;
+    }
+
+    if (
+      normalizedFilters.price_min !== undefined &&
+      bean.primary_package.price < normalizedFilters.price_min
+    ) {
       return false;
     }
 
