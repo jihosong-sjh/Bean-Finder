@@ -8,6 +8,7 @@ import { BeanCard } from '../components/beans/BeanCard';
 import { TasteScore } from '../components/beans/TasteScore';
 import { ErrorState } from '../components/status/ErrorState';
 import type { BeanCard as BeanCardModel } from '../features/beans/bean.search';
+import { useCompareList } from '../features/compare/useCompareList';
 import {
   formatPrice,
   formatPricePer100g,
@@ -16,6 +17,7 @@ import {
 
 export function BeanDetailPage() {
   const { beanId } = useParams();
+  const compare = useCompareList();
 
   if (!beanId) {
     return (
@@ -79,6 +81,10 @@ export function BeanDetailPage() {
     });
   }
 
+  function handleCompare(targetBeanId: string) {
+    compare.toggle(targetBeanId);
+  }
+
   return (
     <div className="detail-page">
       <Link className="text-link" to="/search">
@@ -115,7 +121,14 @@ export function BeanDetailPage() {
             <span>{formatPricePer100g(bean.package.price_per_100g)}</span>
           </div>
           <div className="detail-actions">
-            <button type="button">비교함 추가</button>
+            <button
+              type="button"
+              disabled={compare.isFull && !compare.has(bean.id)}
+              aria-pressed={compare.has(bean.id)}
+              onClick={() => handleCompare(bean.id)}
+            >
+              {compare.has(bean.id) ? '비교함 제거' : '비교함 추가'}
+            </button>
             {bean.flags.is_available ? (
               <a
                 className="button-link"
@@ -200,6 +213,9 @@ export function BeanDetailPage() {
                 key={item.id}
                 bean={item}
                 compact
+                compareSelected={compare.has(item.id)}
+                compareDisabled={compare.isFull}
+                onCompare={handleCompare}
                 onOutboundClick={handleSimilarOutboundClick}
               />
             ))}

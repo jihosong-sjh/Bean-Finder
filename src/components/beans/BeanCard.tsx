@@ -10,6 +10,8 @@ import { TasteScore } from './TasteScore';
 type BeanCardProps = {
   bean: BeanCardModel;
   compact?: boolean;
+  compareSelected?: boolean;
+  compareDisabled?: boolean;
   onCompare?: (beanId: string) => void;
   onOutboundClick?: (bean: BeanCardModel) => void;
 };
@@ -17,6 +19,8 @@ type BeanCardProps = {
 export function BeanCard({
   bean,
   compact = false,
+  compareSelected = false,
+  compareDisabled = false,
   onCompare,
   onOutboundClick,
 }: BeanCardProps) {
@@ -86,8 +90,13 @@ export function BeanCard({
         </div>
       </Link>
       <div className="bean-card__actions">
-        <button type="button" onClick={() => onCompare?.(bean.id)}>
-          비교함 추가
+        <button
+          type="button"
+          disabled={compareDisabled && !compareSelected}
+          aria-pressed={compareSelected}
+          onClick={() => onCompare?.(bean.id)}
+        >
+          {compareSelected ? '비교함 제거' : '비교함 추가'}
         </button>
         {bean.is_available ? (
           <a

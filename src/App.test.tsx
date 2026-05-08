@@ -49,8 +49,8 @@ describe('M0 routes', () => {
     ['/search?q=라떼', '라떼'],
     ['/beans/fritz-daily-blend', '데일리 블렌드'],
     ['/compare', '원두 비교'],
-    ['/categories/daily', 'daily'],
-    ['/rankings/value', 'value'],
+    ['/categories/low-acidity', '신맛 적은 원두'],
+    ['/rankings/price-per-100g', '100g당 가격 낮은 원두'],
   ])('renders %s', (path, heading) => {
     renderRoute(path);
 

@@ -5,6 +5,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
+import { CompareMiniBar } from '../compare/CompareMiniBar';
 import { SearchInput } from '../search/SearchInput';
 
 const navItems = [
@@ -51,6 +52,7 @@ export function AppLayout() {
       <main className="page-frame">
         <Outlet />
       </main>
+      <CompareMiniBar />
     </div>
   );
 }

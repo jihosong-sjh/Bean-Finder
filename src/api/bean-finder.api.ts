@@ -177,7 +177,10 @@ export type BeanDetail = {
   };
 };
 
-type BatchBeanCard = Omit<BeanCard, 'taste_summary' | 'easy_taste_tags'> & {
+export type BatchBeanCard = Omit<
+  BeanCard,
+  'taste_summary' | 'easy_taste_tags'
+> & {
   taste_profile: {
     acidity: ScoreValue;
     sweetness: ScoreValue;

@@ -18,6 +18,7 @@ import type {
   BeanCard as BeanCardModel,
   SortKey,
 } from '../features/beans/bean.search';
+import { useCompareList } from '../features/compare/useCompareList';
 
 const DEFAULT_LIMIT = 20;
 
@@ -29,6 +30,7 @@ export function SearchPage() {
   const searchQuery = ensureDefaultLimit(searchParams);
   const searchResponse = getBeansSearchApi(searchQuery);
   const filterOptionsResponse = getFilterOptionsApi();
+  const compare = useCompareList();
 
   if ('error' in searchResponse.body) {
     return (
@@ -160,6 +162,10 @@ export function SearchPage() {
     });
   }
 
+  function handleCompare(beanId: string) {
+    compare.toggle(beanId);
+  }
+
   return (
     <div className="search-page">
       <header className="page-title">
@@ -200,6 +206,9 @@ export function SearchPage() {
                   <BeanCard
                     key={bean.id}
                     bean={bean}
+                    compareSelected={compare.has(bean.id)}
+                    compareDisabled={compare.isFull}
+                    onCompare={handleCompare}
                     onOutboundClick={handleOutboundClick}
                   />
                 ))}
