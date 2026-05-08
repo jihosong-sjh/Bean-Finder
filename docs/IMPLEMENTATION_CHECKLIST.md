@@ -189,13 +189,13 @@
 | [x] | IMP-035 | P0 | `GET /api/v1/beans/{beanId}` 구현 | 완료 |
 | [x] | IMP-036 | P0 | `GET /api/v1/beans/batch` 구현 | 완료 |
 | [x] | IMP-037 | P1 | `GET /api/v1/beans/{beanId}/similar` 구현 | 완료 |
-| [ ] | IMP-038 | P1 | `GET /api/v1/categories` 구현 | 대기 |
-| [ ] | IMP-039 | P1 | `GET /api/v1/categories/{categoryKey}/beans` 구현 | 대기 |
-| [ ] | IMP-040 | P1 | `GET /api/v1/rankings` 구현 | 대기 |
-| [ ] | IMP-041 | P1 | `GET /api/v1/rankings/{rankingKey}/beans` 구현 | 대기 |
-| [ ] | IMP-042 | P1 | `GET /api/v1/filter-options` 구현 | 대기 |
-| [ ] | IMP-043 | P1 | `POST /api/v1/events` stub 구현 | 대기 |
-| [ ] | IMP-044 | P1 | 내부 데이터 검증 endpoint 또는 CLI 연결 | 대기 |
+| [x] | IMP-038 | P1 | `GET /api/v1/categories` 구현 | 완료 |
+| [x] | IMP-039 | P1 | `GET /api/v1/categories/{categoryKey}/beans` 구현 | 완료 |
+| [x] | IMP-040 | P1 | `GET /api/v1/rankings` 구현 | 완료 |
+| [x] | IMP-041 | P1 | `GET /api/v1/rankings/{rankingKey}/beans` 구현 | 완료 |
+| [x] | IMP-042 | P1 | `GET /api/v1/filter-options` 구현 | 완료 |
+| [x] | IMP-043 | P1 | `POST /api/v1/events` stub 구현 | 완료 |
+| [x] | IMP-044 | P1 | 내부 데이터 검증 endpoint 또는 CLI 연결 | 완료 |
 
 완료 기준:
 

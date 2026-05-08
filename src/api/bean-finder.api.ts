@@ -1,7 +1,13 @@
 import { loadBeanData } from '../features/beans/bean.repository';
 import {
+  calculatePricePer100g,
+  createEasyTasteTags,
+} from '../features/beans/bean.derived';
+import {
+  calculateRankingBeans,
   calculateSimilarBeans,
   mapBeanToCard,
+  mergeCategoryFilters,
   searchBeans,
 } from '../features/beans/bean.search';
 import type {
@@ -19,8 +25,10 @@ import type {
   Score,
   TastingNoteGroup,
 } from '../features/beans/bean.types';
+import { beanInputSchema } from '../features/beans/bean.validation';
 import { apiError, apiSuccess } from './api.response';
 import type { ApiFailure, ApiResult } from './api.response';
+import type { ZodIssue } from 'zod';
 
 type QueryValue = string | number | boolean | string[] | undefined;
 type QueryInput = URLSearchParams | Record<string, QueryValue>;
@@ -37,6 +45,81 @@ type HomeResponse = {
     title: string;
     description: string;
   }>;
+};
+
+type CategoryListItem = {
+  key: string;
+  title: string;
+  description: string;
+  default_filters: SearchFilters;
+  default_sort: string;
+  display_order: number;
+};
+
+type RankingListItem = {
+  key: string;
+  title: string;
+  description: string;
+  display_order: number;
+};
+
+type RankingBean = {
+  rank: number;
+  bean: BeanCard;
+};
+
+type FilterOption = {
+  key: string;
+  label: string;
+  count: number | null;
+};
+
+type TastingNoteFilterOption = FilterOption & {
+  group: TastingNoteGroup;
+};
+
+type FilterOptionsResponse = {
+  price_ranges: FilterOption[];
+  acidity: FilterOption[];
+  body: FilterOption[];
+  roast_levels: FilterOption[];
+  origins: FilterOption[];
+  tasting_notes: TastingNoteFilterOption[];
+  brew_methods: FilterOption[];
+};
+
+type EventRequestBody = {
+  event_name?: unknown;
+  occurred_at?: unknown;
+  page_path?: unknown;
+  properties?: unknown;
+};
+
+type ValidationMessage = {
+  field: string;
+  message: string;
+};
+
+type BeanValidationResult = {
+  id: string;
+  valid: boolean;
+  errors: ValidationMessage[];
+  warnings: ValidationMessage[];
+  computed: {
+    price_per_100g: number | null;
+    easy_taste_tags: string[];
+  };
+};
+
+type ValidateBeansResponse = {
+  valid: boolean;
+  summary: {
+    total: number;
+    valid_count: number;
+    invalid_count: number;
+    warning_count: number;
+  };
+  results: BeanValidationResult[];
 };
 
 type BeanDetail = {
@@ -188,6 +271,39 @@ const brewMethodLabels: Record<BrewMethod, string> = {
   french_press: '프렌치프레스',
 };
 
+const eventNames = [
+  'search_submitted',
+  'filter_changed',
+  'sort_changed',
+  'bean_card_clicked',
+  'bean_detail_viewed',
+  'compare_added',
+  'compare_removed',
+  'compare_viewed',
+  'outbound_clicked',
+  'category_opened',
+  'ranking_opened',
+] as const;
+
+const priceRangeLabels: Record<PriceRange, string> = {
+  under_10000: '1만원 이하',
+  '10000_20000': '1만원 초과 2만원 이하',
+  '20000_30000': '2만원 초과 3만원 이하',
+  over_30000: '3만원 초과',
+};
+
+const acidityLabels: Record<(typeof acidityValues)[number], string> = {
+  low: '낮음',
+  medium: '보통',
+  high: '높음',
+};
+
+const bodyLabels: Record<(typeof bodyValues)[number], string> = {
+  light: '가벼움',
+  medium: '보통',
+  heavy: '묵직함',
+};
+
 export function getHomeApi(): ApiResult<HomeResponse> {
   const data = loadBeanData();
 
@@ -331,7 +447,348 @@ export function getBeanSimilarApi(beanId: string, query: QueryInput = {}) {
   });
 }
 
-function parseSearchQuery(query: QueryInput):
+export function getCategoriesApi(): ApiResult<CategoryListItem[]> {
+  const data = loadBeanData();
+
+  return apiSuccess(
+    data.categories
+      .filter((category) => category.is_active)
+      .sort((a, b) => a.display_order - b.display_order)
+      .map((category) => ({
+        key: category.key,
+        title: category.title,
+        description: category.description,
+        default_filters: category.default_filters as SearchFilters,
+        default_sort: category.default_sort,
+        display_order: category.display_order,
+      })),
+  );
+}
+
+export function getCategoryBeansApi(
+  categoryKey: string,
+  query: QueryInput = {},
+) {
+  const data = loadBeanData();
+  const category = data.categories.find(
+    (item) => item.key === categoryKey && item.is_active,
+  );
+
+  if (!category) {
+    return apiError(404, 'NOT_FOUND', '카테고리를 찾을 수 없습니다.', [
+      { field: 'categoryKey', reason: '존재하지 않는 카테고리 key입니다.' },
+    ]);
+  }
+
+  const defaultSort = isSortKey(category.default_sort)
+    ? category.default_sort
+    : 'recommended';
+  const parsedQuery = parseSearchQuery(query, { defaultSort });
+  if (!parsedQuery.ok) {
+    return parsedQuery.error;
+  }
+
+  const includeCategoryFilter = parseOptionalBooleanParam(
+    query,
+    'include_category_filter',
+  );
+  if (!includeCategoryFilter.ok) {
+    return includeCategoryFilter.error;
+  }
+
+  const context = {
+    roasteries: data.roasteries,
+    tastingNotes: data.tastingNotes,
+  };
+  const filters =
+    includeCategoryFilter.value === false
+      ? parsedQuery.value.filters
+      : mergeCategoryFilters(
+          category.default_filters,
+          parsedQuery.value.filters,
+        );
+  const result = searchBeans(
+    data.beans,
+    {
+      query: parsedQuery.value.q,
+      filters,
+      sort: parsedQuery.value.sort,
+      page: parsedQuery.value.page,
+      limit: parsedQuery.value.limit,
+    },
+    context,
+  );
+
+  return apiSuccess(result.items, {
+    category: {
+      key: category.key,
+      title: category.title,
+      description: category.description,
+      default_filters: category.default_filters,
+    },
+    result_count: result.total_count,
+    pagination: result.pagination,
+  });
+}
+
+export function getRankingsApi(): ApiResult<RankingListItem[]> {
+  const data = loadBeanData();
+
+  return apiSuccess(
+    data.rankings
+      .filter((ranking) => ranking.is_active)
+      .sort((a, b) => a.display_order - b.display_order)
+      .map((ranking) => ({
+        key: ranking.key,
+        title: ranking.title,
+        description: ranking.description,
+        display_order: ranking.display_order,
+      })),
+  );
+}
+
+export function getRankingBeansApi(
+  rankingKey: string,
+  query: QueryInput = {},
+): ApiResult<RankingBean[]> {
+  const limitResult = parseIntegerParam(query, 'limit', {
+    defaultValue: 50,
+    min: 1,
+    max: 50,
+  });
+  if (!limitResult.ok) {
+    return limitResult.error;
+  }
+
+  const data = loadBeanData();
+  const ranking = data.rankings.find(
+    (item) => item.key === rankingKey && item.is_active,
+  );
+
+  if (!ranking) {
+    return apiError(404, 'NOT_FOUND', '랭킹을 찾을 수 없습니다.', [
+      { field: 'rankingKey', reason: '존재하지 않는 랭킹 key입니다.' },
+    ]);
+  }
+
+  const context = {
+    roasteries: data.roasteries,
+    tastingNotes: data.tastingNotes,
+  };
+  const rankedBeans = calculateRankingBeans(data.beans, ranking, context)
+    .slice(0, limitResult.value)
+    .map((bean, index) => ({
+      rank: index + 1,
+      bean: mapBeanToCard(bean, context),
+    }));
+
+  return apiSuccess(rankedBeans, {
+    ranking: {
+      key: ranking.key,
+      title: ranking.title,
+      description: ranking.description,
+      criteria: formatRankingCriteria(ranking),
+    },
+    result_count: rankedBeans.length,
+  });
+}
+
+export function getFilterOptionsApi(
+  query: QueryInput = {},
+): ApiResult<FilterOptionsResponse> {
+  const parsedQuery = parseSearchQuery(query);
+  if (!parsedQuery.ok) {
+    return parsedQuery.error;
+  }
+
+  const data = loadBeanData();
+  const originCountries = [
+    ...new Set(data.beans.map((bean) => bean.origin.country).filter(Boolean)),
+  ].sort((a, b) => a.localeCompare(b));
+
+  return apiSuccess({
+    price_ranges: priceRanges.map((key) => ({
+      key,
+      label: priceRangeLabels[key],
+      count: null,
+    })),
+    acidity: acidityValues.map((key) => ({
+      key,
+      label: acidityLabels[key],
+      count: null,
+    })),
+    body: bodyValues.map((key) => ({
+      key,
+      label: bodyLabels[key],
+      count: null,
+    })),
+    roast_levels: roastLevels.map((key) => ({
+      key,
+      label: roastLevelLabels[key],
+      count: null,
+    })),
+    origins: originCountries.map((country) => ({
+      key: country,
+      label: country,
+      count: null,
+    })),
+    tasting_notes: data.tastingNotes
+      .slice()
+      .sort((a, b) => a.label_ko.localeCompare(b.label_ko, 'ko'))
+      .map((note) => ({
+        key: note.key,
+        label: note.label_ko,
+        group: note.group,
+        count: null,
+      })),
+    brew_methods: brewMethods.map((key) => ({
+      key,
+      label: brewMethodLabels[key],
+      count: null,
+    })),
+  });
+}
+
+export function postEventApi(body: unknown = {}) {
+  if (!isRecord(body)) {
+    return apiError(400, 'INVALID_BODY', '요청 본문이 올바르지 않습니다.', [
+      { field: 'body', reason: 'JSON object여야 합니다.' },
+    ]);
+  }
+
+  const requiredFields: Array<keyof EventRequestBody> = [
+    'event_name',
+    'occurred_at',
+    'page_path',
+  ];
+  const missingField = requiredFields.find(
+    (field) => typeof body[field] !== 'string' || body[field] === '',
+  );
+
+  if (missingField) {
+    return apiError(400, 'INVALID_BODY', '필수 필드가 누락되었습니다.', [
+      { field: missingField, reason: '비어 있지 않은 문자열이어야 합니다.' },
+    ]);
+  }
+
+  if (!eventNames.includes(body.event_name as (typeof eventNames)[number])) {
+    return apiError(400, 'INVALID_BODY', '허용되지 않은 이벤트명입니다.', [
+      {
+        field: 'event_name',
+        reason: `허용되지 않는 값입니다: ${body.event_name}`,
+      },
+    ]);
+  }
+
+  if (Number.isNaN(Date.parse(body.occurred_at as string))) {
+    return apiError(400, 'INVALID_BODY', '발생 시각이 올바르지 않습니다.', [
+      {
+        field: 'occurred_at',
+        reason: 'ISO-8601 datetime 문자열이어야 합니다.',
+      },
+    ]);
+  }
+
+  if (body.properties !== undefined && !isRecord(body.properties)) {
+    return apiError(400, 'INVALID_BODY', '이벤트 속성이 올바르지 않습니다.', [
+      { field: 'properties', reason: 'JSON object여야 합니다.' },
+    ]);
+  }
+
+  return apiSuccess({ accepted: true });
+}
+
+export function postInternalBeansValidateApi(body: unknown = {}) {
+  if (!isRecord(body) || !Array.isArray(body.beans)) {
+    return apiError(400, 'INVALID_BODY', '검증할 원두 목록이 필요합니다.', [
+      { field: 'beans', reason: '배열이어야 합니다.' },
+    ]);
+  }
+
+  const data = loadBeanData();
+  const idCounts = countStringIds(body.beans);
+  const roasteryIds = new Set(data.roasteries.map((roastery) => roastery.id));
+  const tastingNoteKeys = new Set(data.tastingNotes.map((note) => note.key));
+  const results = body.beans.map((rawBean, index) => {
+    const parsed = beanInputSchema.safeParse(rawBean);
+    const fallbackId = getRawBeanId(rawBean) ?? `beans.${index}`;
+    const errors: ValidationMessage[] = parsed.success
+      ? []
+      : parsed.error.issues.map(zodIssueToValidationMessage);
+    const warnings: ValidationMessage[] = [];
+    let computed: BeanValidationResult['computed'] = {
+      price_per_100g: null,
+      easy_taste_tags: [],
+    };
+
+    if (parsed.success) {
+      const bean = parsed.data;
+
+      if ((idCounts.get(bean.id) ?? 0) > 1) {
+        errors.push({
+          field: 'id',
+          message: `중복 id입니다: ${bean.id}`,
+        });
+      }
+
+      if (!roasteryIds.has(bean.roastery_id)) {
+        errors.push({
+          field: 'roastery_id',
+          message: `존재하지 않는 roastery_id입니다: ${bean.roastery_id}`,
+        });
+      }
+
+      for (const noteKey of bean.tasting_notes) {
+        if (!tastingNoteKeys.has(noteKey)) {
+          errors.push({
+            field: 'tasting_notes',
+            message: `존재하지 않는 tasting note입니다: ${noteKey}`,
+          });
+        }
+      }
+
+      computed = {
+        price_per_100g: calculatePricePer100g(
+          bean.primary_package.price,
+          bean.primary_package.weight_g,
+        ),
+        easy_taste_tags: createEasyTasteTags(bean, data.tastingNotes),
+      };
+      warnings.push(...createBeanValidationWarnings(bean, computed));
+    }
+
+    return {
+      id: parsed.success ? parsed.data.id : fallbackId,
+      valid: errors.length === 0,
+      errors,
+      warnings,
+      computed,
+    };
+  });
+  const invalidCount = results.filter((result) => !result.valid).length;
+  const warningCount = results.reduce(
+    (sum, result) => sum + result.warnings.length,
+    0,
+  );
+
+  return apiSuccess<ValidateBeansResponse>({
+    valid: invalidCount === 0,
+    summary: {
+      total: results.length,
+      valid_count: results.length - invalidCount,
+      invalid_count: invalidCount,
+      warning_count: warningCount,
+    },
+    results,
+  });
+}
+
+function parseSearchQuery(
+  query: QueryInput,
+  options: {
+    defaultSort?: SortKey;
+  } = {},
+):
   | {
       ok: true;
       value: {
@@ -425,7 +882,12 @@ function parseSearchQuery(query: QueryInput):
   );
   if (!availability.ok) return availability;
 
-  const sort = parseEnumParam(query, 'sort', sortKeys, 'recommended');
+  const sort = parseEnumParam(
+    query,
+    'sort',
+    sortKeys,
+    options.defaultSort ?? 'recommended',
+  );
   if (!sort.ok) return sort;
 
   const isDecaf = parseOptionalBooleanParam(query, 'is_decaf');
@@ -624,6 +1086,105 @@ function invalidQuery(field: string, reason: string) {
       [{ field, reason }],
     ),
   };
+}
+
+function isSortKey(value: string): value is SortKey {
+  return sortKeys.includes(value as SortKey);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function formatRankingCriteria(
+  ranking: ReturnType<typeof loadBeanData>['rankings'][number],
+) {
+  const fieldLabels: Record<typeof ranking.sort.field, string> = {
+    price_per_100g: 'price_per_100g',
+    recommendation_score: '추천 점수',
+    acidity: '산미',
+    body: '바디',
+    price: '가격',
+  };
+  const directionLabel =
+    ranking.sort.direction === 'asc' ? '오름차순' : '내림차순';
+
+  return `${fieldLabels[ranking.sort.field]} ${directionLabel}`;
+}
+
+function countStringIds(beans: unknown[]) {
+  const idCounts = new Map<string, number>();
+
+  for (const bean of beans) {
+    const id = getRawBeanId(bean);
+
+    if (id) {
+      idCounts.set(id, (idCounts.get(id) ?? 0) + 1);
+    }
+  }
+
+  return idCounts;
+}
+
+function getRawBeanId(bean: unknown) {
+  if (!isRecord(bean) || typeof bean.id !== 'string' || bean.id.length === 0) {
+    return null;
+  }
+
+  return bean.id;
+}
+
+function zodIssueToValidationMessage(issue: ZodIssue): ValidationMessage {
+  return {
+    field: issue.path.length > 0 ? issue.path.join('.') : 'body',
+    message: issue.message,
+  };
+}
+
+function createBeanValidationWarnings(
+  bean: {
+    primary_package: {
+      price: number;
+    };
+    source: {
+      last_checked_at: string;
+    };
+  },
+  computed: BeanValidationResult['computed'],
+) {
+  const warnings: ValidationMessage[] = [];
+
+  if (
+    bean.primary_package.price < 5000 ||
+    bean.primary_package.price > 100000
+  ) {
+    warnings.push({
+      field: 'primary_package.price',
+      message: 'MVP 운영 범위를 벗어난 가격입니다.',
+    });
+  }
+
+  if (
+    computed.price_per_100g !== null &&
+    (computed.price_per_100g < 1000 || computed.price_per_100g > 50000)
+  ) {
+    warnings.push({
+      field: 'primary_package.price_per_100g',
+      message: `price와 weight_g 기준으로 ${computed.price_per_100g}이 계산됩니다.`,
+    });
+  }
+
+  const checkedAt = Date.parse(bean.source.last_checked_at);
+  const daysSinceChecked = (Date.now() - checkedAt) / (1000 * 60 * 60 * 24);
+
+  if (Number.isFinite(daysSinceChecked) && daysSinceChecked > 180) {
+    warnings.push({
+      field: 'source.last_checked_at',
+      message: '마지막 확인일이 180일을 초과했습니다.',
+    });
+  }
+
+  return warnings;
 }
 
 function mapBeanToDetail(
