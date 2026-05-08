@@ -14,6 +14,7 @@ import {
   searchBeans,
   sortBeans,
 } from './bean.search';
+import type { Bean } from './bean.types';
 
 const data = loadBeanData();
 const context = {
@@ -137,6 +138,28 @@ describe('bean search domain', () => {
     ).toBe(true);
   });
 
+  it('filters low acidity, heavy body, direct price, and OR values by the spec rules', () => {
+    const lowAcidity = applyBeanFilters(data.beans, { acidity: 'low' });
+    const heavyBody = applyBeanFilters(data.beans, { body: 'heavy' });
+    const under10000 = applyBeanFilters(data.beans, {
+      price_range: 'under_10000',
+    });
+    const lowOrHighAcidity = applyBeanFilters(data.beans, {
+      acidity: ['low', 'high'],
+    });
+
+    expect(lowAcidity.every((bean) => bean.taste_profile.acidity <= 2)).toBe(
+      true,
+    );
+    expect(heavyBody.every((bean) => bean.taste_profile.body >= 4)).toBe(true);
+    expect(
+      under10000.every((bean) => bean.primary_package.price <= 10000),
+    ).toBe(true);
+    expect(
+      lowOrHighAcidity.every((bean) => bean.taste_profile.acidity !== 3),
+    ).toBe(true);
+  });
+
   it('sorts by price_per_100g ascending', () => {
     const sorted = sortBeans(data.beans, 'price_per_100g_asc');
 
@@ -150,6 +173,78 @@ describe('bean search domain', () => {
         );
       }),
     ).toBe(true);
+  });
+
+  it('sorts by price, acidity, recommendation score, and deterministic tie-breakers', () => {
+    const priceSorted = sortBeans(data.beans, 'price_asc');
+    const aciditySorted = sortBeans(data.beans, 'acidity_desc');
+    const recommendedSorted = sortBeans(data.beans, 'recommended', {
+      filters: { brew_method: 'latte' },
+      context,
+    });
+    const lowerCompleteness = makeComparableBean('bean_m7_low_completeness', {
+      name: '가나다',
+      data_completeness_score: 10,
+    });
+    const higherCompleteness = makeComparableBean('bean_m7_high_completeness', {
+      name: '하나다',
+      data_completeness_score: 90,
+    });
+    const sameCompletenessA = makeComparableBean('bean_m7_name_a', {
+      name: '가나다',
+      data_completeness_score: 50,
+    });
+    const sameCompletenessB = makeComparableBean('bean_m7_name_b', {
+      name: '나다라',
+      data_completeness_score: 50,
+    });
+
+    expect(
+      priceSorted.every((bean, index) => {
+        const previous = priceSorted[index - 1];
+        return (
+          !previous ||
+          previous.primary_package.price <= bean.primary_package.price
+        );
+      }),
+    ).toBe(true);
+    expect(
+      aciditySorted.every((bean, index) => {
+        const previous = aciditySorted[index - 1];
+        return (
+          !previous ||
+          previous.taste_profile.acidity >= bean.taste_profile.acidity
+        );
+      }),
+    ).toBe(true);
+    expect(
+      recommendedSorted.every((bean, index) => {
+        const previous = recommendedSorted[index - 1];
+        return (
+          !previous ||
+          calculateRecommendationScore(previous, {
+            beans: data.beans,
+            filters: { brew_method: 'latte' },
+            context,
+          }) >=
+            calculateRecommendationScore(bean, {
+              beans: data.beans,
+              filters: { brew_method: 'latte' },
+              context,
+            })
+        );
+      }),
+    ).toBe(true);
+    expect(
+      sortBeans([lowerCompleteness, higherCompleteness], 'price_asc').map(
+        (bean) => bean.id,
+      ),
+    ).toEqual(['bean_m7_high_completeness', 'bean_m7_low_completeness']);
+    expect(
+      sortBeans([sameCompletenessB, sameCompletenessA], 'price_asc').map(
+        (bean) => bean.id,
+      ),
+    ).toEqual(['bean_m7_name_a', 'bean_m7_name_b']);
   });
 
   it('calculates recommendation score with fallback formula when ratings are missing', () => {
@@ -250,4 +345,97 @@ describe('bean search domain', () => {
       }),
     ).toBe(true);
   });
+
+  it('ranks similar beans by note overlap, taste distance, roast level, and limit', () => {
+    const target = makeComparableBean('bean_m7_similar_target', {
+      tasting_notes: ['chocolate', 'nutty', 'caramel'],
+      roast_level: 'medium_dark',
+      origin: {
+        ...data.beans[0].origin,
+        country: 'Blend',
+      },
+      taste_profile: {
+        acidity: 2,
+        sweetness: 4,
+        bitterness: 3,
+        body: 4,
+        aroma: 3,
+        balance: 4,
+      },
+    });
+    const closer = makeComparableBean('bean_m7_similar_closer', {
+      name: '유사 원두 A',
+      tasting_notes: ['chocolate', 'nutty', 'caramel'],
+      roast_level: 'medium_dark',
+      origin: {
+        ...target.origin,
+      },
+      taste_profile: {
+        ...target.taste_profile,
+      },
+    });
+    const farther = makeComparableBean('bean_m7_similar_farther', {
+      name: '유사 원두 B',
+      tasting_notes: ['berry', 'floral', 'citrus'],
+      roast_level: 'light',
+      origin: {
+        ...target.origin,
+        country: 'Ethiopia',
+      },
+      taste_profile: {
+        acidity: 5,
+        sweetness: 2,
+        bitterness: 1,
+        body: 1,
+        aroma: 5,
+        balance: 2,
+      },
+    });
+
+    const similar = calculateSimilarBeans(
+      [target, farther, closer],
+      target.id,
+      {
+        limit: 1,
+      },
+    );
+
+    expect(similar).toHaveLength(1);
+    expect(similar[0].bean.id).toBe(closer.id);
+    expect(similar[0].similarity_score).toBeGreaterThan(90);
+  });
 });
+
+function makeComparableBean(id: string, overrides: Partial<Bean> = {}): Bean {
+  const bean = structuredClone(data.beans[0]);
+
+  return {
+    ...bean,
+    ...overrides,
+    id,
+    slug: id.replace(/_/g, '-'),
+    primary_package: {
+      ...bean.primary_package,
+      price: 18000,
+      price_per_100g: 9000,
+      ...overrides.primary_package,
+    },
+    rating: {
+      ...bean.rating,
+      ...overrides.rating,
+    },
+    flags: {
+      ...bean.flags,
+      is_available: true,
+      ...overrides.flags,
+    },
+    taste_profile: {
+      ...bean.taste_profile,
+      ...overrides.taste_profile,
+    },
+    origin: {
+      ...bean.origin,
+      ...overrides.origin,
+    },
+  };
+}

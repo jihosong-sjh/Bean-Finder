@@ -835,6 +835,12 @@ h2 {
   margin-bottom: 0;
 }
 
+.empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .detail-page {
   display: grid;
   gap: 28px;

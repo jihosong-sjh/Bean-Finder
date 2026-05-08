@@ -7,7 +7,12 @@ import type { TastingNote } from '../tasting-notes/tasting-note.types';
 
 const idSchema = z.string().regex(/^[a-z0-9_]+$/);
 const slugSchema = z.string().regex(/^[a-z0-9-]+$/);
-const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const dateSchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/)
+  .refine((value) => !isFutureDate(value), {
+    message: 'Date must not be in the future',
+  });
 const isoDateTimeSchema = z.string().datetime({ offset: true });
 const nullableUrlSchema = z.string().url().nullable();
 const scoreSchema = z.union([
@@ -192,4 +197,21 @@ export function assertUnique(values: string[], label: string) {
       `${label} contains duplicate values: ${[...new Set(duplicates)].join(', ')}`,
     );
   }
+}
+
+function isFutureDate(value: string) {
+  const timestamp = Date.parse(`${value}T00:00:00Z`);
+
+  if (!Number.isFinite(timestamp)) {
+    return true;
+  }
+
+  const now = new Date();
+  const todayUtc = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+  );
+
+  return timestamp > todayUtc;
 }

@@ -112,6 +112,51 @@ describe('bean finder api layer', () => {
     });
   });
 
+  it('returns available beans for an empty search query', () => {
+    const availableCount = loadBeanData().beans.filter(
+      (bean) => bean.flags.is_available,
+    ).length;
+    const result = expectSuccess<BeanCard[]>(getBeansSearchApi({ limit: 50 }));
+
+    expect(result.body.data).toHaveLength(availableCount);
+    expect(result.body.data.every((bean) => bean.is_available)).toBe(true);
+    expect(result.body.meta.pagination).toMatchObject({
+      page: 1,
+      limit: 50,
+      total_count: availableCount,
+    });
+  });
+
+  it('applies search API filters for acidity, body, price, and 100g price sort', () => {
+    const lowAcidity = expectSuccess<BeanCard[]>(
+      getBeansSearchApi({ acidity: 'low', limit: 50 }),
+    );
+    const heavyBody = expectSuccess<BeanCard[]>(
+      getBeansSearchApi({ body: 'heavy', limit: 50 }),
+    );
+    const under20000 = expectSuccess<BeanCard[]>(
+      getBeansSearchApi({ price_max: 20000, limit: 50 }),
+    );
+    const valueSorted = expectSuccess<BeanCard[]>(
+      getBeansSearchApi({ sort: 'price_per_100g_asc', limit: 50 }),
+    );
+
+    expect(
+      lowAcidity.body.data.every(
+        (bean) => bean.taste_summary.acidity.score <= 2,
+      ),
+    ).toBe(true);
+    expect(
+      heavyBody.body.data.every((bean) => bean.taste_summary.body.score >= 4),
+    ).toBe(true);
+    expect(under20000.body.data.every((bean) => bean.price <= 20000)).toBe(
+      true,
+    );
+    expect(isSortedAscending(valueSorted.body.data, 'price_per_100g')).toBe(
+      true,
+    );
+  });
+
   it('returns invalid query error for unsupported enum values', () => {
     const result = expectFailure(
       getBeansSearchApi({ acidity: 'very_high' }),
@@ -148,6 +193,10 @@ describe('bean finder api layer', () => {
       },
       package: {
         price: 18000,
+        price_per_100g: 9000,
+      },
+      source: {
+        last_checked_at: '2026-05-08',
       },
     });
   });
@@ -172,6 +221,17 @@ describe('bean finder api layer', () => {
     expect(result.body.meta.missing_ids).toEqual(['missing']);
     expect(result.body.data[0]).toHaveProperty('taste_profile');
     expect(result.body.data[0]).not.toHaveProperty('taste_summary');
+  });
+
+  it('returns one batch bean and rejects requests without ids', () => {
+    const single = expectSuccess(
+      getBeansBatchApi({ ids: 'bean_fritz_daily_blend_001' }),
+    );
+    const missing = expectFailure(getBeansBatchApi({}), 400);
+
+    expect(single.body.data).toHaveLength(1);
+    expect(single.body.data[0].id).toBe('bean_fritz_daily_blend_001');
+    expect(missing.body.error.details?.[0].field).toBe('ids');
   });
 
   it('rejects batch requests over four ids', () => {
@@ -241,6 +301,18 @@ describe('bean finder api layer', () => {
     });
   });
 
+  it('keeps category filters when applying an explicit sort', () => {
+    const result = expectSuccess<BeanCard[]>(
+      getCategoryBeansApi('low-acidity', { sort: 'price_asc', limit: 50 }),
+    );
+
+    expect(result.body.data.length).toBeGreaterThan(0);
+    expect(
+      result.body.data.every((bean) => bean.taste_summary.acidity.score <= 2),
+    ).toBe(true);
+    expect(isSortedAscending(result.body.data, 'price')).toBe(true);
+  });
+
   it('returns not found for unknown category beans', () => {
     const result = expectFailure(getCategoryBeansApi('missing-category'), 404);
 
@@ -271,6 +343,21 @@ describe('bean finder api layer', () => {
       key: 'price-per-100g',
       criteria: 'price_per_100g 오름차순',
     });
+  });
+
+  it('returns latte ranking beans and unknown ranking errors', () => {
+    const latte = expectSuccess(getRankingBeansApi('latte', { limit: 10 }));
+    const missing = expectFailure(getRankingBeansApi('missing-ranking'), 404);
+
+    expect(latte.body.data.length).toBeGreaterThan(0);
+    expect(
+      latte.body.data.every((item) =>
+        item.bean.recommended_brew_methods.some(
+          (method) => method.key === 'latte' || method.key === 'espresso',
+        ),
+      ),
+    ).toBe(true);
+    expect(missing.body.error.code).toBe('NOT_FOUND');
   });
 
   it('rejects ranking bean limit over fifty', () => {
@@ -324,6 +411,26 @@ describe('bean finder api layer', () => {
     expect(rejected.body.error.details?.[0].field).toBe('event_name');
   });
 
+  it('accepts events without properties and rejects missing event names', () => {
+    const accepted = expectSuccess(
+      postEventApi({
+        event_name: 'outbound_clicked',
+        occurred_at: '2026-05-08T12:00:00+09:00',
+        page_path: '/beans/fritz-daily-blend',
+      }),
+    );
+    const rejected = expectFailure(
+      postEventApi({
+        occurred_at: '2026-05-08T12:00:00+09:00',
+        page_path: '/search',
+      }),
+      400,
+    );
+
+    expect(accepted.body.data).toEqual({ accepted: true });
+    expect(rejected.body.error.details?.[0].field).toBe('event_name');
+  });
+
   it('validates internal bean payloads without saving data', () => {
     const sampleBean = loadBeanData().beans[0];
     const validBean = {
@@ -371,3 +478,13 @@ describe('bean finder api layer', () => {
     expect(result.body.error.details?.[0].field).toBe('beans');
   });
 });
+
+function isSortedAscending<TItem, TKey extends keyof TItem>(
+  items: TItem[],
+  key: TKey,
+) {
+  return items.every((item, index) => {
+    const previous = items[index - 1];
+    return !previous || Number(previous[key]) <= Number(item[key]);
+  });
+}

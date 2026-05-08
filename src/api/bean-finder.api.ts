@@ -1167,10 +1167,10 @@ function createBeanValidationWarnings(
   const checkedAt = Date.parse(bean.source.last_checked_at);
   const daysSinceChecked = (Date.now() - checkedAt) / (1000 * 60 * 60 * 24);
 
-  if (Number.isFinite(daysSinceChecked) && daysSinceChecked > 180) {
+  if (Number.isFinite(daysSinceChecked) && daysSinceChecked > 90) {
     warnings.push({
       field: 'source.last_checked_at',
-      message: '마지막 확인일이 180일을 초과했습니다.',
+      message: '마지막 확인일이 90일을 초과했습니다.',
     });
   }
 

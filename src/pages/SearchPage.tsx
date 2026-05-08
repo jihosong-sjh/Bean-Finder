@@ -332,7 +332,11 @@ export function SearchPage() {
               )}
             </>
           ) : (
-            <EmptySearchResult onReset={resetAll} />
+            <EmptySearchResult
+              hasFilters={hasAppliedFilters(searchParams)}
+              onResetFilters={resetFilters}
+              onResetAll={resetAll}
+            />
           )}
         </section>
       </div>
@@ -350,15 +354,34 @@ function ensureDefaultLimit(searchParams: URLSearchParams) {
   return nextParams;
 }
 
-function EmptySearchResult({ onReset }: { onReset: () => void }) {
+function hasAppliedFilters(searchParams: URLSearchParams) {
+  return filterParamKeys.some((key) => searchParams.has(key));
+}
+
+function EmptySearchResult({
+  hasFilters,
+  onResetFilters,
+  onResetAll,
+}: {
+  hasFilters: boolean;
+  onResetFilters: () => void;
+  onResetAll: () => void;
+}) {
   return (
     <section className="empty-state">
       <p className="eyebrow">검색 결과 없음</p>
       <h2>조건에 맞는 원두를 찾지 못했습니다</h2>
       <p>검색어를 줄이거나 필터를 초기화해 다시 탐색해 보세요.</p>
-      <button type="button" onClick={onReset}>
-        전체 원두 보기
-      </button>
+      <div className="empty-state__actions">
+        {hasFilters && (
+          <button type="button" onClick={onResetFilters}>
+            필터 초기화
+          </button>
+        )}
+        <button type="button" className="text-button" onClick={onResetAll}>
+          전체 원두 보기
+        </button>
+      </div>
     </section>
   );
 }
