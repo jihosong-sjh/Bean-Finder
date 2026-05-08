@@ -72,6 +72,9 @@ describe('BeanCard', () => {
     expect(screen.getByText('바디감')).toBeInTheDocument();
     expect(screen.getByText('초콜릿')).toBeInTheDocument();
     expect(
+      screen.getByRole('img', { name: '프릳츠 데일리 블렌드' }),
+    ).toBeInTheDocument();
+    expect(
       screen.getByRole('button', { name: '비교함 추가' }),
     ).toBeInTheDocument();
 

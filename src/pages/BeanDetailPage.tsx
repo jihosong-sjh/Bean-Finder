@@ -1,12 +1,11 @@
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {
-  getBeanDetailApi,
-  getBeanSimilarApi,
-  postEventApi,
-} from '../api/bean-finder.api';
+import { getBeanDetailApi, getBeanSimilarApi } from '../api/bean-finder.api';
 import { BeanCard } from '../components/beans/BeanCard';
+import { BeanImage } from '../components/beans/BeanImage';
 import { TasteScore } from '../components/beans/TasteScore';
 import { ErrorState } from '../components/status/ErrorState';
+import { trackEvent } from '../api/events';
 import type { BeanCard as BeanCardModel } from '../features/beans/bean.search';
 import { useCompareList } from '../features/compare/useCompareList';
 import {
@@ -18,31 +17,72 @@ import {
 export function BeanDetailPage() {
   const { beanId } = useParams();
   const compare = useCompareList();
+  const detailResponse = beanId ? getBeanDetailApi(beanId) : null;
+  const similarResponse = beanId
+    ? getBeanSimilarApi(beanId, { limit: 6 })
+    : null;
+  const bean =
+    detailResponse && 'data' in detailResponse.body
+      ? detailResponse.body.data
+      : null;
+  const beanEventId = bean?.id;
+  const beanEventSlug = bean?.slug;
+
+  useEffect(() => {
+    if (!beanEventId) {
+      return;
+    }
+
+    trackEvent({
+      eventName: 'bean_detail_viewed',
+      properties: {
+        bean_id: beanEventId,
+        bean_slug: beanEventSlug,
+      },
+    });
+  }, [beanEventId, beanEventSlug]);
 
   if (!beanId) {
     return (
       <ErrorState
         title="원두를 찾을 수 없습니다"
         message="원두 ID가 URL에 포함되어 있지 않습니다."
-      />
+      >
+        <Link className="button-link" to="/search">
+          원두 검색으로 이동
+        </Link>
+        <Link className="text-link" to="/">
+          홈으로 이동
+        </Link>
+      </ErrorState>
     );
   }
 
-  const detailResponse = getBeanDetailApi(beanId);
-  const similarResponse = getBeanSimilarApi(beanId, { limit: 6 });
-
-  if ('error' in detailResponse.body) {
+  if (!detailResponse || 'error' in detailResponse.body || !bean) {
     return (
       <ErrorState
         title="원두를 찾을 수 없습니다"
-        message={detailResponse.body.error.message}
-      />
+        message={
+          detailResponse && 'error' in detailResponse.body
+            ? detailResponse.body.error.message
+            : '원두 정보를 불러오지 못했습니다.'
+        }
+      >
+        <Link className="button-link" to="/search">
+          원두 검색으로 이동
+        </Link>
+        <Link className="text-link" to="/">
+          홈으로 이동
+        </Link>
+      </ErrorState>
     );
   }
 
-  const bean = detailResponse.body.data;
   const similarBeans =
-    'data' in similarResponse.body ? similarResponse.body.data : [];
+    similarResponse && 'data' in similarResponse.body
+      ? similarResponse.body.data
+      : [];
+  const currentBeanId = bean.id;
   const productUrl = bean.package.affiliate_url ?? bean.package.product_url;
   const originRows = [
     ['원산지', bean.origin.country],
@@ -58,22 +98,18 @@ export function BeanDetailPage() {
   ];
 
   function handleOutboundClick() {
-    postEventApi({
-      event_name: 'outbound_clicked',
-      occurred_at: new Date().toISOString(),
-      page_path: window.location.pathname,
+    trackEvent({
+      eventName: 'outbound_clicked',
       properties: {
-        bean_id: bean.id,
+        bean_id: currentBeanId,
         product_url: productUrl,
       },
     });
   }
 
   function handleSimilarOutboundClick(item: BeanCardModel) {
-    postEventApi({
-      event_name: 'outbound_clicked',
-      occurred_at: new Date().toISOString(),
-      page_path: window.location.pathname,
+    trackEvent({
+      eventName: 'outbound_clicked',
       properties: {
         bean_id: item.id,
         product_url: item.product_url,
@@ -85,22 +121,28 @@ export function BeanDetailPage() {
     compare.toggle(targetBeanId);
   }
 
+  function handleSimilarCardClick(item: BeanCardModel) {
+    trackEvent({
+      eventName: 'bean_card_clicked',
+      properties: {
+        bean_id: item.id,
+        source: 'similar_beans',
+      },
+    });
+  }
+
   return (
     <div className="detail-page">
       <Link className="text-link" to="/search">
         검색 결과로 돌아가기
       </Link>
       <section className="detail-hero">
-        <div className="detail-hero__image">
-          {bean.media.image_url ? (
-            <img
-              src={bean.media.image_url}
-              alt={bean.media.image_alt ?? `${bean.roastery.name} ${bean.name}`}
-            />
-          ) : (
-            <span>{bean.roastery.name}</span>
-          )}
-        </div>
+        <BeanImage
+          className="detail-hero__image"
+          src={bean.media.image_url}
+          alt={bean.media.image_alt ?? `${bean.roastery.name} ${bean.name}`}
+          fallbackLabel={bean.roastery.name}
+        />
         <div className="detail-hero__content">
           <p className="eyebrow">{bean.roastery.name}</p>
           <h1>{bean.name}</h1>
@@ -215,6 +257,7 @@ export function BeanDetailPage() {
                 compact
                 compareSelected={compare.has(item.id)}
                 compareDisabled={compare.isFull}
+                onCardClick={handleSimilarCardClick}
                 onCompare={handleCompare}
                 onOutboundClick={handleSimilarOutboundClick}
               />

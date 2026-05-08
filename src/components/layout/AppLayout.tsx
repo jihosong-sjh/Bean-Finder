@@ -5,6 +5,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
+import { trackEvent } from '../../api/events';
 import { CompareMiniBar } from '../compare/CompareMiniBar';
 import { SearchInput } from '../search/SearchInput';
 
@@ -22,6 +23,14 @@ export function AppLayout() {
 
   function handleSearch(query: string) {
     const params = new URLSearchParams();
+
+    trackEvent({
+      eventName: 'search_submitted',
+      pagePath: location.pathname,
+      properties: {
+        query,
+      },
+    });
 
     if (query) {
       params.set('q', query);

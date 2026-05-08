@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import type { FilterOptionsResponse } from '../../api/bean-finder.api';
 import { splitParamValue } from './filter-ui';
 
@@ -8,6 +8,10 @@ type FilterPanelProps = {
   onToggleValue: (key: string, value: string) => void;
   onSetValue: (key: string, value: string | null) => void;
   onSetMany: (values: Record<string, string | null>) => void;
+  id?: string;
+  isDrawerOpen?: boolean;
+  onClose?: () => void;
+  titleId?: string;
 };
 
 export function FilterPanel({
@@ -16,7 +20,13 @@ export function FilterPanel({
   onToggleValue,
   onSetValue,
   onSetMany,
+  id,
+  isDrawerOpen = false,
+  onClose,
+  titleId,
 }: FilterPanelProps) {
+  const panelRef = useRef<HTMLElement>(null);
+  const onCloseRef = useRef(onClose);
   const [priceFields, setPriceFields] = useState({
     price_min: searchParams.get('price_min') ?? '',
     price_max: searchParams.get('price_max') ?? '',
@@ -33,6 +43,59 @@ export function FilterPanel({
     });
   }, [searchParams]);
 
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    if (!isDrawerOpen) {
+      return;
+    }
+
+    const panel = panelRef.current;
+    const previousFocus =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const focusable = getFocusableElements(panel);
+
+    focusable[0]?.focus();
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        onCloseRef.current?.();
+        return;
+      }
+
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      const currentFocusable = getFocusableElements(panel);
+      const first = currentFocusable[0];
+      const last = currentFocusable[currentFocusable.length - 1];
+
+      if (!first || !last) {
+        return;
+      }
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      previousFocus?.focus();
+    };
+  }, [isDrawerOpen]);
+
   function handlePriceSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     onSetMany(
@@ -46,8 +109,29 @@ export function FilterPanel({
   }
 
   return (
-    <aside className="filter-panel" aria-label="검색 필터">
-      <h2>필터</h2>
+    <aside
+      ref={panelRef}
+      id={id}
+      className={
+        isDrawerOpen ? 'filter-panel filter-panel--drawer-open' : 'filter-panel'
+      }
+      role={isDrawerOpen ? 'dialog' : undefined}
+      aria-modal={isDrawerOpen ? 'true' : undefined}
+      aria-label={titleId ? undefined : '검색 필터'}
+      aria-labelledby={titleId}
+    >
+      <div className="filter-panel__header">
+        <h2 id={titleId}>필터</h2>
+        {isDrawerOpen && onClose && (
+          <button
+            type="button"
+            className="filter-panel__close text-button"
+            onClick={onClose}
+          >
+            닫기
+          </button>
+        )}
+      </div>
       <CheckboxGroup
         title="가격대"
         paramKey="price_range"
@@ -188,6 +272,18 @@ export function FilterPanel({
       </label>
     </aside>
   );
+}
+
+function getFocusableElements(container: HTMLElement | null) {
+  if (!container) {
+    return [];
+  }
+
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter((element) => !element.hasAttribute('disabled'));
 }
 
 function CheckboxGroup({

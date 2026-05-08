@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useId, useState } from 'react';
 import {
   Link,
   useNavigate,
@@ -9,8 +9,8 @@ import {
   getCategoriesApi,
   getCategoryBeansApi,
   getFilterOptionsApi,
-  postEventApi,
 } from '../api/bean-finder.api';
+import { trackEvent } from '../api/events';
 import { BeanCard } from '../components/beans/BeanCard';
 import { AppliedFilterChips } from '../components/filters/AppliedFilterChips';
 import { FilterPanel } from '../components/filters/FilterPanel';
@@ -55,16 +55,17 @@ export function CategoryPage() {
     ? getCategoryBeansApi(categoryKey, categoryQuery)
     : null;
   const filterOptionsResponse = getFilterOptionsApi();
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const filterPanelId = useId();
+  const filterTitleId = useId();
 
   useEffect(() => {
     if (!categoryKey) {
       return;
     }
 
-    postEventApi({
-      event_name: 'category_opened',
-      occurred_at: new Date().toISOString(),
-      page_path: window.location.pathname,
+    trackEvent({
+      eventName: 'category_opened',
       properties: {
         category_key: categoryKey,
       },
@@ -89,7 +90,14 @@ export function CategoryPage() {
       <ErrorState
         title="필터를 불러오지 못했습니다"
         message={filterOptionsResponse.body.error.message}
-      />
+      >
+        <Link className="button-link" to="/search">
+          검색으로 이동
+        </Link>
+        <Link className="text-link" to="/">
+          홈으로 이동
+        </Link>
+      </ErrorState>
     );
   }
 
@@ -125,6 +133,14 @@ export function CategoryPage() {
     replaceParams(nextParams);
   }
 
+  function setFilterParam(key: string, value: string | null) {
+    trackFilterChanged('set', {
+      filter_key: key,
+      value,
+    });
+    setParam(key, value);
+  }
+
   function setManyParams(values: Record<string, string | null>) {
     const nextParams = new URLSearchParams(searchParams);
 
@@ -138,6 +154,13 @@ export function CategoryPage() {
 
     nextParams.delete('limit');
     replaceParams(nextParams);
+  }
+
+  function setManyFilterParams(values: Record<string, string | null>) {
+    trackFilterChanged('set_many', {
+      values,
+    });
+    setManyParams(values);
   }
 
   function toggleParamValue(key: string, value: string) {
@@ -155,6 +178,14 @@ export function CategoryPage() {
 
     nextParams.delete('limit');
     replaceParams(nextParams);
+  }
+
+  function toggleFilterParamValue(key: string, value: string) {
+    trackFilterChanged('toggle', {
+      filter_key: key,
+      value,
+    });
+    toggleParamValue(key, value);
   }
 
   function removeAppliedFilter(key: string, value?: string) {
@@ -175,6 +206,10 @@ export function CategoryPage() {
     }
 
     nextParams.delete('limit');
+    trackFilterChanged('remove', {
+      filter_key: key,
+      value,
+    });
     replaceParams(nextParams);
   }
 
@@ -186,10 +221,12 @@ export function CategoryPage() {
     }
 
     nextParams.delete('limit');
+    trackFilterChanged('reset_filters');
     replaceParams(nextParams);
   }
 
   function resetAll() {
+    trackFilterChanged('reset_all');
     navigate(`/categories/${categoryKey}`);
   }
 
@@ -201,10 +238,8 @@ export function CategoryPage() {
   }
 
   function handleOutboundClick(bean: BeanCardModel) {
-    postEventApi({
-      event_name: 'outbound_clicked',
-      occurred_at: new Date().toISOString(),
-      page_path: window.location.pathname,
+    trackEvent({
+      eventName: 'outbound_clicked',
       properties: {
         bean_id: bean.id,
         product_url: bean.product_url,
@@ -213,7 +248,62 @@ export function CategoryPage() {
   }
 
   function toggleCategoryFilter() {
-    setParam('include_category_filter', includeCategoryFilter ? 'false' : null);
+    const value = includeCategoryFilter ? 'false' : null;
+
+    trackFilterChanged('toggle_category_filter', {
+      filter_key: 'include_category_filter',
+      value,
+    });
+    setParam('include_category_filter', value);
+  }
+
+  function handleCardClick(bean: BeanCardModel) {
+    trackEvent({
+      eventName: 'bean_card_clicked',
+      properties: {
+        bean_id: bean.id,
+        category_key: category.key,
+        sort,
+      },
+    });
+  }
+
+  function handleSortChange(value: SortKey) {
+    trackEvent({
+      eventName: 'sort_changed',
+      properties: {
+        previous_sort: sort,
+        sort: value,
+        category_key: category.key,
+        result_count: meta.result_count,
+      },
+    });
+    setParam('sort', value);
+  }
+
+  function openFilterDrawer() {
+    setIsFilterDrawerOpen(true);
+  }
+
+  function closeFilterDrawer() {
+    setIsFilterDrawerOpen(false);
+  }
+
+  function trackFilterChanged(
+    action: string,
+    extraProperties: Record<string, unknown> = {},
+  ) {
+    trackEvent({
+      eventName: 'filter_changed',
+      properties: {
+        action,
+        category_key: category.key,
+        sort,
+        filters: Object.fromEntries(searchParams),
+        result_count: meta.result_count,
+        ...extraProperties,
+      },
+    });
   }
 
   return (
@@ -228,10 +318,18 @@ export function CategoryPage() {
               {meta.result_count as number}개 중 {beans.length}개 표시
             </p>
           </div>
-          <SortSelect
-            value={sort}
-            onChange={(value) => setParam('sort', value)}
-          />
+          <div className="result-controls">
+            <button
+              type="button"
+              className="filter-drawer-button"
+              aria-controls={filterPanelId}
+              aria-expanded={isFilterDrawerOpen}
+              onClick={openFilterDrawer}
+            >
+              필터
+            </button>
+            <SortSelect value={sort} onChange={handleSortChange} />
+          </div>
         </div>
         <div className="applied-filters" aria-label="카테고리 기본 조건">
           <button type="button" onClick={toggleCategoryFilter}>
@@ -250,13 +348,25 @@ export function CategoryPage() {
           onResetAll={resetAll}
         />
       </header>
+      {isFilterDrawerOpen && (
+        <button
+          type="button"
+          className="filter-drawer__backdrop"
+          aria-label="필터 닫기"
+          onClick={closeFilterDrawer}
+        />
+      )}
       <div className="search-layout">
         <FilterPanel
+          id={filterPanelId}
+          titleId={filterTitleId}
+          isDrawerOpen={isFilterDrawerOpen}
+          onClose={closeFilterDrawer}
           searchParams={searchParams}
           filterOptions={filterOptionsResponse.body.data}
-          onToggleValue={toggleParamValue}
-          onSetValue={setParam}
-          onSetMany={setManyParams}
+          onToggleValue={toggleFilterParamValue}
+          onSetValue={setFilterParam}
+          onSetMany={setManyFilterParams}
         />
         <section className="results-panel" aria-label="카테고리 원두 목록">
           {beans.length > 0 ? (
@@ -268,6 +378,7 @@ export function CategoryPage() {
                     bean={bean}
                     compareSelected={compare.has(bean.id)}
                     compareDisabled={compare.isFull}
+                    onCardClick={handleCardClick}
                     onCompare={compare.toggle}
                     onOutboundClick={handleOutboundClick}
                   />
@@ -323,10 +434,14 @@ function ErrorWithHomeLink({
 }) {
   return (
     <div className="content-panel">
-      <ErrorState title={title} message={message} />
-      <Link className="button-link" to="/">
-        홈으로 이동
-      </Link>
+      <ErrorState title={title} message={message}>
+        <Link className="button-link" to="/search">
+          검색으로 이동
+        </Link>
+        <Link className="text-link" to="/">
+          홈으로 이동
+        </Link>
+      </ErrorState>
     </div>
   );
 }

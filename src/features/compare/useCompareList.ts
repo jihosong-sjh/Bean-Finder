@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
-import { postEventApi } from '../../api/bean-finder.api';
+import { trackEvent } from '../../api/events';
 import {
   addCompareId,
   clearCompareIds,
@@ -129,6 +129,8 @@ export function useCompareList() {
   );
 
   const clear = useCallback(() => {
+    const previousIds = ids;
+
     if (typeof window !== 'undefined') {
       clearCompareIds(window.localStorage);
     }
@@ -136,7 +138,11 @@ export function useCompareList() {
     cachedRawValue = readRawValueFromBrowser();
     cachedIds = [];
     emitChange();
-  }, []);
+
+    if (previousIds.length > 0) {
+      trackCompareClearEvent(previousIds);
+    }
+  }, [ids]);
 
   return useMemo(
     () => ({
@@ -159,17 +165,22 @@ function trackCompareEvent(
   beanId: string,
   compareCount: number,
 ) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  postEventApi({
-    event_name: eventName,
-    occurred_at: new Date().toISOString(),
-    page_path: window.location.pathname,
+  trackEvent({
+    eventName,
     properties: {
       bean_id: beanId,
       compare_count: compareCount,
+    },
+  });
+}
+
+function trackCompareClearEvent(beanIds: string[]) {
+  trackEvent({
+    eventName: 'compare_removed',
+    properties: {
+      action: 'clear',
+      bean_ids: beanIds,
+      compare_count: 0,
     },
   });
 }

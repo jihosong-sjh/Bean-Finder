@@ -1,10 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import {
-  getRankingBeansApi,
-  getRankingsApi,
-  postEventApi,
-} from '../api/bean-finder.api';
+import { getRankingBeansApi, getRankingsApi } from '../api/bean-finder.api';
+import { trackEvent } from '../api/events';
 import { BeanCard } from '../components/beans/BeanCard';
 import { ErrorState } from '../components/status/ErrorState';
 import type { BeanCard as BeanCardModel } from '../features/beans/bean.search';
@@ -31,10 +28,8 @@ export function RankingPage() {
       return;
     }
 
-    postEventApi({
-      event_name: 'ranking_opened',
-      occurred_at: new Date().toISOString(),
-      page_path: window.location.pathname,
+    trackEvent({
+      eventName: 'ranking_opened',
       properties: {
         ranking_key: rankingKey,
       },
@@ -59,7 +54,14 @@ export function RankingPage() {
       <ErrorState
         title="랭킹 목록을 불러오지 못했습니다"
         message={rankingsResponse.body.error.message}
-      />
+      >
+        <Link className="button-link" to="/search">
+          검색으로 이동
+        </Link>
+        <Link className="text-link" to="/">
+          홈으로 이동
+        </Link>
+      </ErrorState>
     );
   }
 
@@ -67,13 +69,21 @@ export function RankingPage() {
   const ranking = rankingResponse.body.meta.ranking as RankingMeta;
 
   function handleOutboundClick(bean: BeanCardModel) {
-    postEventApi({
-      event_name: 'outbound_clicked',
-      occurred_at: new Date().toISOString(),
-      page_path: window.location.pathname,
+    trackEvent({
+      eventName: 'outbound_clicked',
       properties: {
         bean_id: bean.id,
         product_url: bean.product_url,
+      },
+    });
+  }
+
+  function handleCardClick(bean: BeanCardModel) {
+    trackEvent({
+      eventName: 'bean_card_clicked',
+      properties: {
+        bean_id: bean.id,
+        ranking_key: ranking.key,
       },
     });
   }
@@ -113,6 +123,7 @@ export function RankingPage() {
                 compact
                 compareSelected={compare.has(item.bean.id)}
                 compareDisabled={compare.isFull}
+                onCardClick={handleCardClick}
                 onCompare={compare.toggle}
                 onOutboundClick={handleOutboundClick}
               />
@@ -139,10 +150,14 @@ function ErrorWithHomeLink({
 }) {
   return (
     <div className="content-panel">
-      <ErrorState title={title} message={message} />
-      <Link className="button-link" to="/">
-        홈으로 이동
-      </Link>
+      <ErrorState title={title} message={message}>
+        <Link className="button-link" to="/search">
+          검색으로 이동
+        </Link>
+        <Link className="text-link" to="/">
+          홈으로 이동
+        </Link>
+      </ErrorState>
     </div>
   );
 }

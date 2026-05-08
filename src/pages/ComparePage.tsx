@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  getBeansBatchApi,
-  postEventApi,
-  type BatchBeanCard,
-} from '../api/bean-finder.api';
+import { getBeansBatchApi, type BatchBeanCard } from '../api/bean-finder.api';
+import { trackEvent } from '../api/events';
+import { ErrorState } from '../components/status/ErrorState';
 import { useCompareList } from '../features/compare/useCompareList';
 import {
   formatPrice,
@@ -17,6 +15,7 @@ export function ComparePage() {
   const compare = useCompareList();
   const response =
     compare.count > 0 ? getBeansBatchApi({ ids: compare.ids }) : null;
+  const hasBatchError = Boolean(response && 'error' in response.body);
   const beans = response && 'data' in response.body ? response.body.data : [];
   const missingIds =
     response && 'data' in response.body
@@ -24,10 +23,8 @@ export function ComparePage() {
       : [];
 
   useEffect(() => {
-    postEventApi({
-      event_name: 'compare_viewed',
-      occurred_at: new Date().toISOString(),
-      page_path: window.location.pathname,
+    trackEvent({
+      eventName: 'compare_viewed',
       properties: {
         bean_ids: compare.ids,
       },
@@ -44,6 +41,22 @@ export function ComparePage() {
           원두 추가하러 가기
         </Link>
       </section>
+    );
+  }
+
+  if (hasBatchError && response && 'error' in response.body) {
+    return (
+      <ErrorState
+        title="비교함을 불러오지 못했습니다"
+        message={response.body.error.message}
+      >
+        <Link className="button-link" to="/search">
+          원두 추가하러 가기
+        </Link>
+        <button type="button" className="text-button" onClick={compare.clear}>
+          비교함 비우기
+        </button>
+      </ErrorState>
     );
   }
 
@@ -75,8 +88,16 @@ export function ComparePage() {
         )}
       </header>
 
-      <DesktopCompareTable beans={beans} onRemove={compare.remove} />
-      <MobileCompareList beans={beans} onRemove={compare.remove} />
+      <DesktopCompareTable
+        beans={beans}
+        onRemove={compare.remove}
+        onOutboundClick={trackOutboundClick}
+      />
+      <MobileCompareList
+        beans={beans}
+        onRemove={compare.remove}
+        onOutboundClick={trackOutboundClick}
+      />
     </div>
   );
 }
@@ -84,11 +105,13 @@ export function ComparePage() {
 function DesktopCompareTable({
   beans,
   onRemove,
+  onOutboundClick,
 }: {
   beans: BatchBeanCard[];
   onRemove: (beanId: string) => void;
+  onOutboundClick: (bean: BatchBeanCard) => void;
 }) {
-  const rows = buildCompareRows(beans);
+  const rows = buildCompareRows(beans, onOutboundClick);
 
   return (
     <div className="compare-table-wrap">
@@ -131,9 +154,11 @@ function DesktopCompareTable({
 function MobileCompareList({
   beans,
   onRemove,
+  onOutboundClick,
 }: {
   beans: BatchBeanCard[];
   onRemove: (beanId: string) => void;
+  onOutboundClick: (bean: BatchBeanCard) => void;
 }) {
   return (
     <div className="compare-mobile-list" aria-label="모바일 비교 목록">
@@ -155,7 +180,7 @@ function MobileCompareList({
             </button>
           </div>
           <dl className="info-list">
-            {buildMobileRows(bean).map(([label, value]) => (
+            {buildMobileRows(bean, onOutboundClick).map(([label, value]) => (
               <div key={label}>
                 <dt>{label}</dt>
                 <dd>{value}</dd>
@@ -168,7 +193,10 @@ function MobileCompareList({
   );
 }
 
-function buildCompareRows(beans: BatchBeanCard[]) {
+function buildCompareRows(
+  beans: BatchBeanCard[],
+  onOutboundClick: (bean: BatchBeanCard) => void,
+) {
   return [
     row('가격', beans, (bean) => formatPrice(bean.price)),
     row('용량', beans, (bean) => formatWeight(bean.weight_g)),
@@ -192,7 +220,12 @@ function buildCompareRows(beans: BatchBeanCard[]) {
     row('판매 상태', beans, (bean) => (bean.is_available ? '판매 중' : '품절')),
     row('판매처', beans, (bean) =>
       bean.is_available ? (
-        <a href={bean.product_url} target="_blank" rel="noreferrer">
+        <a
+          href={bean.product_url}
+          target="_blank"
+          rel="noreferrer"
+          onClick={() => onOutboundClick(bean)}
+        >
           판매처 이동
         </a>
       ) : (
@@ -202,8 +235,14 @@ function buildCompareRows(beans: BatchBeanCard[]) {
   ];
 }
 
-function buildMobileRows(bean: BatchBeanCard): Array<[string, ReactNode]> {
-  return buildCompareRows([bean]).map((item) => [item.label, item.values[0]]);
+function buildMobileRows(
+  bean: BatchBeanCard,
+  onOutboundClick: (bean: BatchBeanCard) => void,
+): Array<[string, ReactNode]> {
+  return buildCompareRows([bean], onOutboundClick).map((item) => [
+    item.label,
+    item.values[0],
+  ]);
 }
 
 function row(
@@ -233,4 +272,15 @@ function InlineTags({ values }: { values: string[] }) {
       ))}
     </div>
   );
+}
+
+function trackOutboundClick(bean: BatchBeanCard) {
+  trackEvent({
+    eventName: 'outbound_clicked',
+    properties: {
+      bean_id: bean.id,
+      product_url: bean.product_url,
+      source: 'compare',
+    },
+  });
 }

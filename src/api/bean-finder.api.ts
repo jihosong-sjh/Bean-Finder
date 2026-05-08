@@ -28,6 +28,7 @@ import type {
 import { beanInputSchema } from '../features/beans/bean.validation';
 import { apiError, apiSuccess } from './api.response';
 import type { ApiFailure, ApiResult } from './api.response';
+import { eventNames } from './event.types';
 import type { ZodIssue } from 'zod';
 
 type QueryValue = string | number | boolean | string[] | undefined;
@@ -273,20 +274,6 @@ const brewMethodLabels: Record<BrewMethod, string> = {
   moka_pot: '모카포트',
   french_press: '프렌치프레스',
 };
-
-const eventNames = [
-  'search_submitted',
-  'filter_changed',
-  'sort_changed',
-  'bean_card_clicked',
-  'bean_detail_viewed',
-  'compare_added',
-  'compare_removed',
-  'compare_viewed',
-  'outbound_clicked',
-  'category_opened',
-  'ranking_opened',
-] as const;
 
 const priceRangeLabels: Record<PriceRange, string> = {
   under_10000: '1만원 이하',

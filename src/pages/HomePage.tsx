@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { getHomeApi } from '../api/bean-finder.api';
+import { trackEvent } from '../api/events';
 import { SearchInput } from '../components/search/SearchInput';
+import { ErrorState } from '../components/status/ErrorState';
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -10,11 +12,32 @@ export function HomePage() {
   function handleSearch(query: string) {
     const params = new URLSearchParams();
 
+    trackEvent({
+      eventName: 'search_submitted',
+      pagePath: '/',
+      properties: {
+        query,
+      },
+    });
+
     if (query) {
       params.set('q', query);
     }
 
     navigate(`/search${params.size ? `?${params.toString()}` : ''}`);
+  }
+
+  if ('error' in response.body) {
+    return (
+      <ErrorState
+        title="홈 데이터를 불러오지 못했습니다"
+        message={response.body.error.message}
+      >
+        <Link className="button-link" to="/search">
+          검색으로 이동
+        </Link>
+      </ErrorState>
+    );
   }
 
   return (

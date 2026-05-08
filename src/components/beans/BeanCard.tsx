@@ -5,6 +5,7 @@ import {
   formatPricePer100g,
   formatWeight,
 } from '../../utils/price-format';
+import { BeanImage } from './BeanImage';
 import { TasteScore } from './TasteScore';
 
 type BeanCardProps = {
@@ -12,6 +13,7 @@ type BeanCardProps = {
   compact?: boolean;
   compareSelected?: boolean;
   compareDisabled?: boolean;
+  onCardClick?: (bean: BeanCardModel) => void;
   onCompare?: (beanId: string) => void;
   onOutboundClick?: (bean: BeanCardModel) => void;
 };
@@ -21,12 +23,14 @@ export function BeanCard({
   compact = false,
   compareSelected = false,
   compareDisabled = false,
+  onCardClick,
   onCompare,
   onOutboundClick,
 }: BeanCardProps) {
   const originLabel = [bean.origin.country, bean.origin.region]
     .filter(Boolean)
     .join(' / ');
+  const imageAlt = bean.image_alt ?? `${bean.roastery.name} ${bean.name}`;
 
   function handleOutboundClick() {
     onOutboundClick?.(bean);
@@ -34,17 +38,17 @@ export function BeanCard({
 
   return (
     <article className={compact ? 'bean-card bean-card--compact' : 'bean-card'}>
-      <Link className="bean-card__link" to={`/beans/${bean.slug}`}>
-        <div className="bean-card__image">
-          {bean.image_url ? (
-            <img
-              src={bean.image_url}
-              alt={bean.image_alt ?? `${bean.roastery.name} ${bean.name}`}
-            />
-          ) : (
-            <span>{bean.roastery.name}</span>
-          )}
-        </div>
+      <Link
+        className="bean-card__link"
+        to={`/beans/${bean.slug}`}
+        onClick={() => onCardClick?.(bean)}
+      >
+        <BeanImage
+          className="bean-card__image"
+          src={bean.image_url}
+          alt={imageAlt}
+          fallbackLabel={bean.roastery.name}
+        />
         <div className="bean-card__body">
           <div className="bean-card__title-row">
             <p className="bean-card__roastery">{bean.roastery.name}</p>
