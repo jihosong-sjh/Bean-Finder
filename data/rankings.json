@@ -1,0 +1,72 @@
+[
+  {
+    "key": "price-per-100g",
+    "title": "100g당 가격 낮은 원두",
+    "description": "용량 차이를 반영해 100g당 가격이 낮은 순서로 정렬한 랭킹입니다.",
+    "filters": { "is_available": true },
+    "sort": { "field": "price_per_100g", "direction": "asc" },
+    "limit": 50,
+    "is_active": true,
+    "display_order": 1
+  },
+  {
+    "key": "under-20000",
+    "title": "2만원 이하 추천 원두",
+    "description": "2만원 이하 원두를 추천순으로 정렬한 랭킹입니다.",
+    "filters": { "price_max": 20000 },
+    "sort": { "field": "recommendation_score", "direction": "desc" },
+    "limit": 50,
+    "is_active": true,
+    "display_order": 2
+  },
+  {
+    "key": "high-acidity",
+    "title": "산미 강한 원두",
+    "description": "산미가 높은 원두를 산미 점수 순으로 정렬합니다.",
+    "filters": { "acidity": "high" },
+    "sort": { "field": "acidity", "direction": "desc" },
+    "limit": 50,
+    "is_active": true,
+    "display_order": 3
+  },
+  {
+    "key": "low-acidity",
+    "title": "신맛 적은 원두",
+    "description": "산미가 낮은 원두를 산미 점수 낮은 순으로 정렬합니다.",
+    "filters": { "acidity": "low" },
+    "sort": { "field": "acidity", "direction": "asc" },
+    "limit": 50,
+    "is_active": true,
+    "display_order": 4
+  },
+  {
+    "key": "latte",
+    "title": "라떼 추천 원두",
+    "description": "라떼와 에스프레소에 어울리는 원두를 바디감 순으로 정렬합니다.",
+    "filters": { "brew_method": ["latte", "espresso"] },
+    "sort": { "field": "body", "direction": "desc" },
+    "limit": 50,
+    "is_active": true,
+    "display_order": 5
+  },
+  {
+    "key": "hand-drip",
+    "title": "핸드드립 추천 원두",
+    "description": "핸드드립에 어울리는 원두를 추천순으로 정렬합니다.",
+    "filters": { "brew_method": ["hand_drip"] },
+    "sort": { "field": "recommendation_score", "direction": "desc" },
+    "limit": 50,
+    "is_active": true,
+    "display_order": 6
+  },
+  {
+    "key": "beginner",
+    "title": "입문자 추천 원두",
+    "description": "산미와 쓴맛이 과하지 않고 가격 부담이 낮은 원두입니다.",
+    "filters": { "acidity_max": 3, "bitterness_max": 3, "price_max": 25000 },
+    "sort": { "field": "recommendation_score", "direction": "desc" },
+    "limit": 50,
+    "is_active": true,
+    "display_order": 7
+  }
+]

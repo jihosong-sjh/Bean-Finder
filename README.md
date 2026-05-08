@@ -2,7 +2,7 @@
 
 Bean Finder는 커피 원두의 맛, 특징, 가격을 비교해 사용자가 취향과 예산에 맞는 원두를 찾도록 돕는 커피 원두 검색 엔진입니다.
 
-현재 저장소는 기획 문서와 Vite + React + TypeScript 기반 MVP 앱 skeleton을 포함합니다. M0 프로젝트 기반 준비가 완료되어 로컬 개발 서버, 라우팅 placeholder, 타입 검사, lint, 단위 테스트, 빌드 명령을 실행할 수 있습니다.
+현재 저장소는 기획 문서, Vite + React + TypeScript 기반 MVP 앱 skeleton, JSON 기반 샘플 데이터와 검증 스크립트를 포함합니다. M1 데이터 기반 구축까지 완료되어 로컬 개발 서버, 라우팅 placeholder, 타입 검사, lint, 단위 테스트, 데이터 검증, 빌드 명령을 실행할 수 있습니다.
 
 ## Quick Start
 
@@ -16,6 +16,7 @@ npm run dev
 ```bash
 npm run typecheck
 npm run lint
+npm run validate:data
 npm run test
 npm run build
 ```
@@ -119,11 +120,12 @@ Frontend App
 npm run dev
 npm run typecheck
 npm run lint
+npm run validate:data
 npm run test
 npm run build
 ```
 
-향후 M1 이후 `npm run validate:data`, M3 이후 API 테스트, M7 이후 E2E 테스트를 추가합니다.
+향후 M3 이후 API 테스트, M7 이후 E2E 테스트를 추가합니다.
 
 ## Data Workflow
 

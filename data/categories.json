@@ -1,0 +1,83 @@
+[
+  {
+    "key": "low-acidity",
+    "title": "신맛 적은 원두",
+    "description": "산미가 낮고 고소하거나 묵직한 느낌의 원두입니다.",
+    "default_filters": { "acidity": "low" },
+    "default_sort": "recommended",
+    "is_active": true,
+    "display_order": 1
+  },
+  {
+    "key": "bright-acidity",
+    "title": "산미 있는 원두",
+    "description": "상큼한 산미와 과일향이 뚜렷한 원두입니다.",
+    "default_filters": { "acidity": "high" },
+    "default_sort": "recommended",
+    "is_active": true,
+    "display_order": 2
+  },
+  {
+    "key": "nutty",
+    "title": "고소한 원두",
+    "description": "견과류와 로스티드 계열 컵노트가 있는 원두입니다.",
+    "default_filters": { "tasting_note_groups": ["nut"] },
+    "default_sort": "recommended",
+    "is_active": true,
+    "display_order": 3
+  },
+  {
+    "key": "full-body",
+    "title": "묵직한 원두",
+    "description": "바디감이 높고 에스프레소나 라떼에 어울리는 원두입니다.",
+    "default_filters": { "body": "heavy" },
+    "default_sort": "recommended",
+    "is_active": true,
+    "display_order": 4
+  },
+  {
+    "key": "latte",
+    "title": "라떼용 원두",
+    "description": "우유와 섞어도 맛이 또렷한 원두입니다.",
+    "default_filters": { "brew_method": ["latte", "espresso"] },
+    "default_sort": "recommended",
+    "is_active": true,
+    "display_order": 5
+  },
+  {
+    "key": "hand-drip",
+    "title": "핸드드립용 원두",
+    "description": "향미와 산미를 즐기기 좋은 원두입니다.",
+    "default_filters": { "brew_method": ["hand_drip"] },
+    "default_sort": "recommended",
+    "is_active": true,
+    "display_order": 6
+  },
+  {
+    "key": "under-20000",
+    "title": "2만원 이하 원두",
+    "description": "가격 부담이 낮은 원두입니다.",
+    "default_filters": { "price_max": 20000 },
+    "default_sort": "price_asc",
+    "is_active": true,
+    "display_order": 7
+  },
+  {
+    "key": "value",
+    "title": "가성비 원두",
+    "description": "100g당 가격이 낮은 원두입니다.",
+    "default_filters": { "price_per_100g_percentile": "bottom_30" },
+    "default_sort": "price_per_100g_asc",
+    "is_active": true,
+    "display_order": 8
+  },
+  {
+    "key": "decaf",
+    "title": "디카페인 원두",
+    "description": "카페인 부담을 줄이고 싶은 사용자를 위한 원두입니다.",
+    "default_filters": { "is_decaf": true },
+    "default_sort": "recommended",
+    "is_active": true,
+    "display_order": 9
+  }
+]

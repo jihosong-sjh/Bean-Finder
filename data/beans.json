@@ -1,0 +1,1742 @@
+[
+  {
+    "id": "bean_fritz_daily_blend_001",
+    "slug": "fritz-daily-blend",
+    "name": "데일리 블렌드",
+    "roastery_id": "roastery_fritz",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Brazil, Colombia",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "medium_dark",
+    "tasting_notes": ["chocolate", "nutty", "caramel"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 4,
+      "bitterness": 3,
+      "body": 4,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["espresso", "latte", "moka_pot"],
+    "primary_package": {
+      "price": 18000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/fritz-daily-blend",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/fritz-daily-blend.jpg",
+      "image_alt": "프릳츠 데일리 블렌드"
+    },
+    "rating": {
+      "average": 4.4,
+      "count": 128,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": true
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/fritz-daily-blend",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_fritz_ethiopia_sun_001",
+    "slug": "fritz-ethiopia-sun",
+    "name": "에티오피아 선",
+    "roastery_id": "roastery_fritz",
+    "origin": {
+      "country": "Ethiopia",
+      "country_code": "ET",
+      "region": "Yirgacheffe",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Heirloom",
+    "process": "natural",
+    "roast_level": "light",
+    "tasting_notes": ["berry", "floral", "citrus"],
+    "taste_profile": {
+      "acidity": 5,
+      "sweetness": 4,
+      "bitterness": 1,
+      "body": 2,
+      "aroma": 5,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "cold_brew"],
+    "primary_package": {
+      "price": 23000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/fritz-ethiopia-sun",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/fritz-ethiopia-sun.jpg",
+      "image_alt": "프릳츠 에티오피아 선"
+    },
+    "rating": {
+      "average": 4.7,
+      "count": 64,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": true
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/fritz-ethiopia-sun",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_fritz_brazil_nut_001",
+    "slug": "fritz-brazil-nut",
+    "name": "브라질 너트",
+    "roastery_id": "roastery_fritz",
+    "origin": {
+      "country": "Brazil",
+      "country_code": "BR",
+      "region": "Cerrado",
+      "farm": "Fazenda Sample",
+      "producer": null
+    },
+    "variety": "Catuai",
+    "process": "natural",
+    "roast_level": "medium",
+    "tasting_notes": ["nutty", "almond", "brown_sugar"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 4,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso"],
+    "primary_package": {
+      "price": 16000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/fritz-brazil-nut",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": null,
+      "image_alt": null
+    },
+    "rating": {
+      "average": 4.2,
+      "count": 82,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/fritz-brazil-nut",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_fritz_dark_house_001",
+    "slug": "fritz-dark-house",
+    "name": "다크 하우스",
+    "roastery_id": "roastery_fritz",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Indonesia, Brazil",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "dark",
+    "tasting_notes": ["cacao", "smoky", "roasted_nut"],
+    "taste_profile": {
+      "acidity": 1,
+      "sweetness": 3,
+      "bitterness": 4,
+      "body": 5,
+      "aroma": 4,
+      "balance": 3
+    },
+    "recommended_brew_methods": ["espresso", "latte", "french_press"],
+    "primary_package": {
+      "price": 17500,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/fritz-dark-house",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/fritz-dark-house.jpg",
+      "image_alt": "프릳츠 다크 하우스"
+    },
+    "rating": {
+      "average": 4.1,
+      "count": 93,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/fritz-dark-house",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_fritz_colombia_honey_001",
+    "slug": "fritz-colombia-honey",
+    "name": "콜롬비아 허니",
+    "roastery_id": "roastery_fritz",
+    "origin": {
+      "country": "Colombia",
+      "country_code": "CO",
+      "region": "Huila",
+      "farm": null,
+      "producer": "Sample Producer"
+    },
+    "variety": "Castillo",
+    "process": "honey",
+    "roast_level": "medium",
+    "tasting_notes": ["honey", "apple", "caramel"],
+    "taste_profile": {
+      "acidity": 3,
+      "sweetness": 5,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 4,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "cold_brew"],
+    "primary_package": {
+      "price": 21000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/fritz-colombia-honey",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/fritz-colombia-honey.jpg",
+      "image_alt": "프릳츠 콜롬비아 허니"
+    },
+    "rating": {
+      "average": 4.5,
+      "count": 41,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": false,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/fritz-colombia-honey",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_fritz_decaf_soft_001",
+    "slug": "fritz-decaf-soft",
+    "name": "디카페인 소프트",
+    "roastery_id": "roastery_fritz",
+    "origin": {
+      "country": "Colombia",
+      "country_code": "CO",
+      "region": "Caldas",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Caturra",
+    "process": "washed",
+    "roast_level": "medium",
+    "tasting_notes": ["caramel", "nutty", "chocolate"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 3,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso"],
+    "primary_package": {
+      "price": 19000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/fritz-decaf-soft",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/fritz-decaf-soft.jpg",
+      "image_alt": "프릳츠 디카페인 소프트"
+    },
+    "rating": {
+      "average": 4.3,
+      "count": 38,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": true,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/fritz-decaf-soft",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_nameless_kenya_bright_001",
+    "slug": "nameless-kenya-bright",
+    "name": "케냐 브라이트",
+    "roastery_id": "roastery_nameless",
+    "origin": {
+      "country": "Kenya",
+      "country_code": "KE",
+      "region": "Nyeri",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "SL28",
+    "process": "washed",
+    "roast_level": "light",
+    "tasting_notes": ["citrus", "berry", "winey"],
+    "taste_profile": {
+      "acidity": 5,
+      "sweetness": 4,
+      "bitterness": 1,
+      "body": 2,
+      "aroma": 5,
+      "balance": 3
+    },
+    "recommended_brew_methods": ["hand_drip", "cold_brew"],
+    "primary_package": {
+      "price": 24000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/nameless-kenya-bright",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/nameless-kenya-bright.jpg",
+      "image_alt": "네임리스 케냐 브라이트"
+    },
+    "rating": {
+      "average": 4.6,
+      "count": 37,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": true
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/nameless-kenya-bright",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_nameless_guatemala_calm_001",
+    "slug": "nameless-guatemala-calm",
+    "name": "과테말라 캄",
+    "roastery_id": "roastery_nameless",
+    "origin": {
+      "country": "Guatemala",
+      "country_code": "GT",
+      "region": "Antigua",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Bourbon",
+    "process": "washed",
+    "roast_level": "medium",
+    "tasting_notes": ["chocolate", "almond", "apple"],
+    "taste_profile": {
+      "acidity": 3,
+      "sweetness": 3,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 5
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso"],
+    "primary_package": {
+      "price": 17000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/nameless-guatemala-calm",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/nameless-guatemala-calm.jpg",
+      "image_alt": "네임리스 과테말라 캄"
+    },
+    "rating": {
+      "average": 4.2,
+      "count": 55,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/nameless-guatemala-calm",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_nameless_latte_base_001",
+    "slug": "nameless-latte-base",
+    "name": "라떼 베이스",
+    "roastery_id": "roastery_nameless",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Brazil, India",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "dark",
+    "tasting_notes": ["chocolate", "cacao", "roasted_nut"],
+    "taste_profile": {
+      "acidity": 1,
+      "sweetness": 3,
+      "bitterness": 4,
+      "body": 5,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["espresso", "latte"],
+    "primary_package": {
+      "price": 15000,
+      "weight_g": 250,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/nameless-latte-base",
+      "affiliate_url": null,
+      "package_label": "250g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/nameless-latte-base.jpg",
+      "image_alt": "네임리스 라떼 베이스"
+    },
+    "rating": {
+      "average": 4.5,
+      "count": 110,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": true
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/nameless-latte-base",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_nameless_ethiopia_tea_001",
+    "slug": "nameless-ethiopia-tea",
+    "name": "에티오피아 티",
+    "roastery_id": "roastery_nameless",
+    "origin": {
+      "country": "Ethiopia",
+      "country_code": "ET",
+      "region": "Sidamo",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Heirloom",
+    "process": "washed",
+    "roast_level": "light",
+    "tasting_notes": ["jasmine", "tea", "citrus"],
+    "taste_profile": {
+      "acidity": 4,
+      "sweetness": 3,
+      "bitterness": 1,
+      "body": 1,
+      "aroma": 5,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip"],
+    "primary_package": {
+      "price": 22000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/nameless-ethiopia-tea",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/nameless-ethiopia-tea.jpg",
+      "image_alt": "네임리스 에티오피아 티"
+    },
+    "rating": {
+      "average": null,
+      "count": null,
+      "source": null
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/nameless-ethiopia-tea",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_nameless_peru_soft_001",
+    "slug": "nameless-peru-soft",
+    "name": "페루 소프트",
+    "roastery_id": "roastery_nameless",
+    "origin": {
+      "country": "Peru",
+      "country_code": "PE",
+      "region": "Cajamarca",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Typica",
+    "process": "washed",
+    "roast_level": "medium",
+    "tasting_notes": ["nutty", "caramel", "apple"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 3,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "french_press"],
+    "primary_package": {
+      "price": 14500,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/nameless-peru-soft",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/nameless-peru-soft.jpg",
+      "image_alt": "네임리스 페루 소프트"
+    },
+    "rating": {
+      "average": 4,
+      "count": 27,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/nameless-peru-soft",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_nameless_colombia_decaf_001",
+    "slug": "nameless-colombia-decaf",
+    "name": "콜롬비아 디카페인",
+    "roastery_id": "roastery_nameless",
+    "origin": {
+      "country": "Colombia",
+      "country_code": "CO",
+      "region": "Huila",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Castillo",
+    "process": "washed",
+    "roast_level": "medium",
+    "tasting_notes": ["chocolate", "caramel", "nutty"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 3,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso"],
+    "primary_package": {
+      "price": 20000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/nameless-colombia-decaf",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": null,
+      "image_alt": null
+    },
+    "rating": {
+      "average": 4.1,
+      "count": 22,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": true,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/nameless-colombia-decaf",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_beanbrothers_black_suit_001",
+    "slug": "beanbrothers-black-suit",
+    "name": "블랙 수트",
+    "roastery_id": "roastery_beanbrothers",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Brazil, Colombia",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "medium_dark",
+    "tasting_notes": ["chocolate", "caramel", "hazelnut"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 4,
+      "bitterness": 3,
+      "body": 4,
+      "aroma": 4,
+      "balance": 5
+    },
+    "recommended_brew_methods": ["espresso", "latte"],
+    "primary_package": {
+      "price": 19000,
+      "weight_g": 250,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/beanbrothers-black-suit",
+      "affiliate_url": null,
+      "package_label": "250g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/beanbrothers-black-suit.jpg",
+      "image_alt": "빈브라더스 블랙 수트"
+    },
+    "rating": {
+      "average": 4.6,
+      "count": 141,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": true
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/beanbrothers-black-suit",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_beanbrothers_easy_start_001",
+    "slug": "beanbrothers-easy-start",
+    "name": "이지 스타트",
+    "roastery_id": "roastery_beanbrothers",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Colombia, Brazil",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "medium",
+    "tasting_notes": ["nutty", "chocolate", "brown_sugar"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 3,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 5
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso"],
+    "primary_package": {
+      "price": 15000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/beanbrothers-easy-start",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/beanbrothers-easy-start.jpg",
+      "image_alt": "빈브라더스 이지 스타트"
+    },
+    "rating": {
+      "average": 4.4,
+      "count": 88,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": true
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/beanbrothers-easy-start",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_beanbrothers_ethiopia_berry_001",
+    "slug": "beanbrothers-ethiopia-berry",
+    "name": "에티오피아 베리",
+    "roastery_id": "roastery_beanbrothers",
+    "origin": {
+      "country": "Ethiopia",
+      "country_code": "ET",
+      "region": "Guji",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Heirloom",
+    "process": "natural",
+    "roast_level": "light",
+    "tasting_notes": ["berry", "peach", "floral"],
+    "taste_profile": {
+      "acidity": 4,
+      "sweetness": 5,
+      "bitterness": 1,
+      "body": 2,
+      "aroma": 5,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "cold_brew"],
+    "primary_package": {
+      "price": 26000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/beanbrothers-ethiopia-berry",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/beanbrothers-ethiopia-berry.jpg",
+      "image_alt": "빈브라더스 에티오피아 베리"
+    },
+    "rating": {
+      "average": 4.8,
+      "count": 36,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/beanbrothers-ethiopia-berry",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_beanbrothers_brazil_value_001",
+    "slug": "beanbrothers-brazil-value",
+    "name": "브라질 밸류",
+    "roastery_id": "roastery_beanbrothers",
+    "origin": {
+      "country": "Brazil",
+      "country_code": "BR",
+      "region": "Minas Gerais",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Mundo Novo",
+    "process": "natural",
+    "roast_level": "medium",
+    "tasting_notes": ["nutty", "chocolate", "caramel"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 3,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso", "french_press"],
+    "primary_package": {
+      "price": 12000,
+      "weight_g": 250,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/beanbrothers-brazil-value",
+      "affiliate_url": null,
+      "package_label": "250g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/beanbrothers-brazil-value.jpg",
+      "image_alt": "빈브라더스 브라질 밸류"
+    },
+    "rating": {
+      "average": 4,
+      "count": 104,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/beanbrothers-brazil-value",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_beanbrothers_indonesia_body_001",
+    "slug": "beanbrothers-indonesia-body",
+    "name": "인도네시아 바디",
+    "roastery_id": "roastery_beanbrothers",
+    "origin": {
+      "country": "Indonesia",
+      "country_code": "ID",
+      "region": "Sumatra",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "semi_washed",
+    "roast_level": "medium_dark",
+    "tasting_notes": ["cacao", "smoky", "brown_sugar"],
+    "taste_profile": {
+      "acidity": 1,
+      "sweetness": 3,
+      "bitterness": 4,
+      "body": 5,
+      "aroma": 4,
+      "balance": 3
+    },
+    "recommended_brew_methods": ["espresso", "latte", "french_press"],
+    "primary_package": {
+      "price": 18000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/beanbrothers-indonesia-body",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/beanbrothers-indonesia-body.jpg",
+      "image_alt": "빈브라더스 인도네시아 바디"
+    },
+    "rating": {
+      "average": 4.1,
+      "count": 33,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/beanbrothers-indonesia-body",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_beanbrothers_decaf_latte_001",
+    "slug": "beanbrothers-decaf-latte",
+    "name": "디카페인 라떼",
+    "roastery_id": "roastery_beanbrothers",
+    "origin": {
+      "country": "Colombia",
+      "country_code": "CO",
+      "region": "Quindio",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Castillo",
+    "process": "washed",
+    "roast_level": "medium_dark",
+    "tasting_notes": ["chocolate", "nutty", "caramel"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 3,
+      "bitterness": 3,
+      "body": 4,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["espresso", "latte"],
+    "primary_package": {
+      "price": 21500,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/beanbrothers-decaf-latte",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/beanbrothers-decaf-latte.jpg",
+      "image_alt": "빈브라더스 디카페인 라떼"
+    },
+    "rating": {
+      "average": 4.2,
+      "count": 26,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": true,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/beanbrothers-decaf-latte",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_momos_ethiopia_floral_001",
+    "slug": "momos-ethiopia-floral",
+    "name": "에티오피아 플로럴",
+    "roastery_id": "roastery_momos",
+    "origin": {
+      "country": "Ethiopia",
+      "country_code": "ET",
+      "region": "Gedeb",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Heirloom",
+    "process": "washed",
+    "roast_level": "light",
+    "tasting_notes": ["jasmine", "floral", "citrus"],
+    "taste_profile": {
+      "acidity": 4,
+      "sweetness": 4,
+      "bitterness": 1,
+      "body": 1,
+      "aroma": 5,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip"],
+    "primary_package": {
+      "price": 25000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/momos-ethiopia-floral",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/momos-ethiopia-floral.jpg",
+      "image_alt": "모모스 에티오피아 플로럴"
+    },
+    "rating": {
+      "average": 4.8,
+      "count": 44,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": true
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/momos-ethiopia-floral",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_momos_colombia_sweet_001",
+    "slug": "momos-colombia-sweet",
+    "name": "콜롬비아 스위트",
+    "roastery_id": "roastery_momos",
+    "origin": {
+      "country": "Colombia",
+      "country_code": "CO",
+      "region": "Nariño",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Caturra",
+    "process": "washed",
+    "roast_level": "medium",
+    "tasting_notes": ["caramel", "apple", "honey"],
+    "taste_profile": {
+      "acidity": 3,
+      "sweetness": 5,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 4,
+      "balance": 5
+    },
+    "recommended_brew_methods": ["hand_drip", "cold_brew"],
+    "primary_package": {
+      "price": 19800,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/momos-colombia-sweet",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/momos-colombia-sweet.jpg",
+      "image_alt": "모모스 콜롬비아 스위트"
+    },
+    "rating": {
+      "average": 4.5,
+      "count": 77,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/momos-colombia-sweet",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_momos_rwanda_peach_001",
+    "slug": "momos-rwanda-peach",
+    "name": "르완다 피치",
+    "roastery_id": "roastery_momos",
+    "origin": {
+      "country": "Rwanda",
+      "country_code": "RW",
+      "region": "Nyamasheke",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Bourbon",
+    "process": "washed",
+    "roast_level": "light",
+    "tasting_notes": ["peach", "citrus", "tea"],
+    "taste_profile": {
+      "acidity": 4,
+      "sweetness": 4,
+      "bitterness": 1,
+      "body": 2,
+      "aroma": 4,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "cold_brew"],
+    "primary_package": {
+      "price": 22500,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/momos-rwanda-peach",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/momos-rwanda-peach.jpg",
+      "image_alt": "모모스 르완다 피치"
+    },
+    "rating": {
+      "average": 4.4,
+      "count": 29,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/momos-rwanda-peach",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_momos_brazil_comfort_001",
+    "slug": "momos-brazil-comfort",
+    "name": "브라질 컴포트",
+    "roastery_id": "roastery_momos",
+    "origin": {
+      "country": "Brazil",
+      "country_code": "BR",
+      "region": "Mogiana",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Yellow Bourbon",
+    "process": "natural",
+    "roast_level": "medium",
+    "tasting_notes": ["hazelnut", "chocolate", "brown_sugar"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 4,
+      "bitterness": 2,
+      "body": 4,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["espresso", "latte", "hand_drip"],
+    "primary_package": {
+      "price": 16500,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/momos-brazil-comfort",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/momos-brazil-comfort.jpg",
+      "image_alt": "모모스 브라질 컴포트"
+    },
+    "rating": {
+      "average": 4.3,
+      "count": 68,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/momos-brazil-comfort",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_momos_coldbrew_blend_001",
+    "slug": "momos-coldbrew-blend",
+    "name": "콜드브루 블렌드",
+    "roastery_id": "roastery_momos",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Ethiopia, Brazil",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "medium",
+    "tasting_notes": ["berry", "chocolate", "brown_sugar"],
+    "taste_profile": {
+      "acidity": 3,
+      "sweetness": 4,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 4,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["cold_brew", "hand_drip"],
+    "primary_package": {
+      "price": 15500,
+      "weight_g": 250,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/momos-coldbrew-blend",
+      "affiliate_url": null,
+      "package_label": "250g"
+    },
+    "media": {
+      "image_url": null,
+      "image_alt": null
+    },
+    "rating": {
+      "average": 4.2,
+      "count": 51,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/momos-coldbrew-blend",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_momos_decaf_sugar_001",
+    "slug": "momos-decaf-sugar",
+    "name": "디카페인 슈가",
+    "roastery_id": "roastery_momos",
+    "origin": {
+      "country": "Colombia",
+      "country_code": "CO",
+      "region": "Tolima",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Caturra",
+    "process": "washed",
+    "roast_level": "medium",
+    "tasting_notes": ["brown_sugar", "almond", "chocolate"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 4,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso"],
+    "primary_package": {
+      "price": 20500,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/momos-decaf-sugar",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/momos-decaf-sugar.jpg",
+      "image_alt": "모모스 디카페인 슈가"
+    },
+    "rating": {
+      "average": 4.1,
+      "count": 19,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": true,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/momos-decaf-sugar",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_center_signature_latte_001",
+    "slug": "center-signature-latte",
+    "name": "시그니처 라떼",
+    "roastery_id": "roastery_center",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Brazil, Guatemala",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "medium_dark",
+    "tasting_notes": ["chocolate", "hazelnut", "caramel"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 4,
+      "bitterness": 3,
+      "body": 5,
+      "aroma": 4,
+      "balance": 5
+    },
+    "recommended_brew_methods": ["espresso", "latte"],
+    "primary_package": {
+      "price": 18000,
+      "weight_g": 250,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/center-signature-latte",
+      "affiliate_url": null,
+      "package_label": "250g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/center-signature-latte.jpg",
+      "image_alt": "센터커피 시그니처 라떼"
+    },
+    "rating": {
+      "average": 4.7,
+      "count": 165,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": true
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/center-signature-latte",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_center_espresso_core_001",
+    "slug": "center-espresso-core",
+    "name": "에스프레소 코어",
+    "roastery_id": "roastery_center",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Brazil, Indonesia",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "dark",
+    "tasting_notes": ["cacao", "smoky", "roasted_nut"],
+    "taste_profile": {
+      "acidity": 1,
+      "sweetness": 3,
+      "bitterness": 5,
+      "body": 5,
+      "aroma": 4,
+      "balance": 3
+    },
+    "recommended_brew_methods": ["espresso", "latte", "moka_pot"],
+    "primary_package": {
+      "price": 17000,
+      "weight_g": 250,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/center-espresso-core",
+      "affiliate_url": null,
+      "package_label": "250g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/center-espresso-core.jpg",
+      "image_alt": "센터커피 에스프레소 코어"
+    },
+    "rating": {
+      "average": 4.3,
+      "count": 92,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/center-espresso-core",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_center_handdrip_clear_001",
+    "slug": "center-handdrip-clear",
+    "name": "핸드드립 클리어",
+    "roastery_id": "roastery_center",
+    "origin": {
+      "country": "Ethiopia",
+      "country_code": "ET",
+      "region": "Yirgacheffe",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Heirloom",
+    "process": "washed",
+    "roast_level": "light",
+    "tasting_notes": ["floral", "tea", "citrus"],
+    "taste_profile": {
+      "acidity": 4,
+      "sweetness": 3,
+      "bitterness": 1,
+      "body": 1,
+      "aroma": 5,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip"],
+    "primary_package": {
+      "price": 23500,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/center-handdrip-clear",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/center-handdrip-clear.jpg",
+      "image_alt": "센터커피 핸드드립 클리어"
+    },
+    "rating": {
+      "average": 4.5,
+      "count": 47,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/center-handdrip-clear",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_center_mexico_nut_001",
+    "slug": "center-mexico-nut",
+    "name": "멕시코 너트",
+    "roastery_id": "roastery_center",
+    "origin": {
+      "country": "Mexico",
+      "country_code": "MX",
+      "region": "Chiapas",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Typica",
+    "process": "washed",
+    "roast_level": "medium",
+    "tasting_notes": ["almond", "chocolate", "caramel"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 4,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso"],
+    "primary_package": {
+      "price": 16000,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/center-mexico-nut",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/center-mexico-nut.jpg",
+      "image_alt": "센터커피 멕시코 너트"
+    },
+    "rating": {
+      "average": 4.1,
+      "count": 32,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/center-mexico-nut",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_center_decaf_medium_001",
+    "slug": "center-decaf-medium",
+    "name": "디카페인 미디엄",
+    "roastery_id": "roastery_center",
+    "origin": {
+      "country": "Colombia",
+      "country_code": "CO",
+      "region": "Cauca",
+      "farm": null,
+      "producer": null
+    },
+    "variety": "Castillo",
+    "process": "washed",
+    "roast_level": "medium",
+    "tasting_notes": ["caramel", "chocolate", "nutty"],
+    "taste_profile": {
+      "acidity": 2,
+      "sweetness": 3,
+      "bitterness": 2,
+      "body": 3,
+      "aroma": 3,
+      "balance": 4
+    },
+    "recommended_brew_methods": ["hand_drip", "espresso"],
+    "primary_package": {
+      "price": 18500,
+      "weight_g": 200,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/center-decaf-medium",
+      "affiliate_url": null,
+      "package_label": "200g"
+    },
+    "media": {
+      "image_url": "https://example.com/images/center-decaf-medium.jpg",
+      "image_alt": "센터커피 디카페인 미디엄"
+    },
+    "rating": {
+      "average": 4,
+      "count": 21,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": true,
+      "is_available": true,
+      "is_blend": false,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/center-decaf-medium",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "bean_center_value_blend_001",
+    "slug": "center-value-blend",
+    "name": "밸류 블렌드",
+    "roastery_id": "roastery_center",
+    "origin": {
+      "country": "Blend",
+      "country_code": null,
+      "region": "Brazil, Vietnam",
+      "farm": null,
+      "producer": null
+    },
+    "variety": null,
+    "process": "blend",
+    "roast_level": "medium_dark",
+    "tasting_notes": ["nutty", "cacao", "roasted_nut"],
+    "taste_profile": {
+      "acidity": 1,
+      "sweetness": 3,
+      "bitterness": 3,
+      "body": 4,
+      "aroma": 3,
+      "balance": 3
+    },
+    "recommended_brew_methods": ["espresso", "latte", "french_press"],
+    "primary_package": {
+      "price": 13500,
+      "weight_g": 300,
+      "currency": "KRW",
+      "product_url": "https://example.com/products/center-value-blend",
+      "affiliate_url": null,
+      "package_label": "300g"
+    },
+    "media": {
+      "image_url": null,
+      "image_alt": null
+    },
+    "rating": {
+      "average": 3.9,
+      "count": 74,
+      "source": "sample"
+    },
+    "flags": {
+      "is_decaf": false,
+      "is_available": true,
+      "is_blend": true,
+      "is_featured": false
+    },
+    "source": {
+      "type": "operator_tagging",
+      "name": "샘플 데이터",
+      "url": "https://example.com/products/center-value-blend",
+      "last_checked_at": "2026-05-08",
+      "tagged_by": "operator"
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  }
+]

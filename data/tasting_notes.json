@@ -1,0 +1,146 @@
+[
+  {
+    "key": "citrus",
+    "label_ko": "시트러스",
+    "label_en": "Citrus",
+    "group": "fruit",
+    "aliases": ["lemon", "orange", "grapefruit", "레몬", "오렌지", "자몽"],
+    "easy_tag": "과일향"
+  },
+  {
+    "key": "apple",
+    "label_ko": "사과",
+    "label_en": "Apple",
+    "group": "fruit",
+    "aliases": ["green_apple", "red_apple", "사과"],
+    "easy_tag": "과일향"
+  },
+  {
+    "key": "peach",
+    "label_ko": "복숭아",
+    "label_en": "Peach",
+    "group": "fruit",
+    "aliases": ["stone_fruit", "복숭아"],
+    "easy_tag": "과일향"
+  },
+  {
+    "key": "berry",
+    "label_ko": "베리",
+    "label_en": "Berry",
+    "group": "berry",
+    "aliases": ["berries", "mixed_berry", "red_berry", "블루베리", "딸기"],
+    "easy_tag": "베리향"
+  },
+  {
+    "key": "floral",
+    "label_ko": "꽃향",
+    "label_en": "Floral",
+    "group": "floral",
+    "aliases": ["flower", "꽃향"],
+    "easy_tag": "꽃향"
+  },
+  {
+    "key": "jasmine",
+    "label_ko": "재스민",
+    "label_en": "Jasmine",
+    "group": "floral",
+    "aliases": ["jasmine_tea", "재스민"],
+    "easy_tag": "꽃향"
+  },
+  {
+    "key": "nutty",
+    "label_ko": "견과",
+    "label_en": "Nutty",
+    "group": "nut",
+    "aliases": ["nuts", "고소함", "견과류"],
+    "easy_tag": "고소함"
+  },
+  {
+    "key": "almond",
+    "label_ko": "아몬드",
+    "label_en": "Almond",
+    "group": "nut",
+    "aliases": ["아몬드"],
+    "easy_tag": "고소함"
+  },
+  {
+    "key": "hazelnut",
+    "label_ko": "헤이즐넛",
+    "label_en": "Hazelnut",
+    "group": "nut",
+    "aliases": ["헤이즐넛"],
+    "easy_tag": "고소함"
+  },
+  {
+    "key": "chocolate",
+    "label_ko": "초콜릿",
+    "label_en": "Chocolate",
+    "group": "chocolate",
+    "aliases": ["dark_chocolate", "milk_chocolate", "초콜릿", "다크초콜릿"],
+    "easy_tag": "초콜릿 느낌"
+  },
+  {
+    "key": "cacao",
+    "label_ko": "카카오",
+    "label_en": "Cacao",
+    "group": "chocolate",
+    "aliases": ["cocoa", "카카오"],
+    "easy_tag": "초콜릿 느낌"
+  },
+  {
+    "key": "caramel",
+    "label_ko": "캐러멜",
+    "label_en": "Caramel",
+    "group": "sweet",
+    "aliases": ["카라멜", "캐러멜"],
+    "easy_tag": "단맛 좋음"
+  },
+  {
+    "key": "honey",
+    "label_ko": "꿀",
+    "label_en": "Honey",
+    "group": "sweet",
+    "aliases": ["꿀", "허니"],
+    "easy_tag": "단맛 좋음"
+  },
+  {
+    "key": "brown_sugar",
+    "label_ko": "브라운슈가",
+    "label_en": "Brown Sugar",
+    "group": "sweet",
+    "aliases": ["brown sugar", "흑설탕"],
+    "easy_tag": "단맛 좋음"
+  },
+  {
+    "key": "tea",
+    "label_ko": "차",
+    "label_en": "Tea",
+    "group": "herbal",
+    "aliases": ["black_tea", "홍차", "차"],
+    "easy_tag": "차 같은 느낌"
+  },
+  {
+    "key": "smoky",
+    "label_ko": "스모키",
+    "label_en": "Smoky",
+    "group": "roasted",
+    "aliases": ["smoke", "스모키", "훈연"],
+    "easy_tag": "진하고 쌉쌀함"
+  },
+  {
+    "key": "roasted_nut",
+    "label_ko": "로스티드 너트",
+    "label_en": "Roasted Nut",
+    "group": "roasted",
+    "aliases": ["roasted nuts", "구운 견과"],
+    "easy_tag": "고소함"
+  },
+  {
+    "key": "winey",
+    "label_ko": "와인",
+    "label_en": "Winey",
+    "group": "other",
+    "aliases": ["wine", "와인"],
+    "easy_tag": "복합적인 향"
+  }
+]

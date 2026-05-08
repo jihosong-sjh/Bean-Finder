@@ -1,0 +1,102 @@
+[
+  {
+    "id": "roastery_fritz",
+    "slug": "fritz",
+    "name": "프릳츠",
+    "name_en": "Fritz Coffee Company",
+    "description": "밸런스 좋은 블렌드와 싱글 오리진을 다루는 샘플 로스터리입니다.",
+    "website_url": "https://example.com/fritz",
+    "logo_url": null,
+    "location": {
+      "country": "Korea",
+      "city": "Seoul",
+      "address": null
+    },
+    "social_links": {
+      "instagram": "https://example.com/fritz/instagram",
+      "youtube": null
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "roastery_nameless",
+    "slug": "nameless",
+    "name": "네임리스",
+    "name_en": "Nameless Coffee",
+    "description": "핸드드립용 밝은 산미 원두를 다루는 샘플 로스터리입니다.",
+    "website_url": "https://example.com/nameless",
+    "logo_url": null,
+    "location": {
+      "country": "Korea",
+      "city": "Busan",
+      "address": null
+    },
+    "social_links": {
+      "instagram": null,
+      "youtube": null
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "roastery_beanbrothers",
+    "slug": "beanbrothers",
+    "name": "빈브라더스",
+    "name_en": "Bean Brothers",
+    "description": "입문자용 블렌드와 디카페인 원두를 포함한 샘플 로스터리입니다.",
+    "website_url": "https://example.com/beanbrothers",
+    "logo_url": null,
+    "location": {
+      "country": "Korea",
+      "city": "Seoul",
+      "address": null
+    },
+    "social_links": {
+      "instagram": null,
+      "youtube": null
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "roastery_momos",
+    "slug": "momos",
+    "name": "모모스",
+    "name_en": "Momos Coffee",
+    "description": "과일향과 단맛 중심의 싱글 오리진을 다루는 샘플 로스터리입니다.",
+    "website_url": "https://example.com/momos",
+    "logo_url": null,
+    "location": {
+      "country": "Korea",
+      "city": "Busan",
+      "address": null
+    },
+    "social_links": {
+      "instagram": null,
+      "youtube": null
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  },
+  {
+    "id": "roastery_center",
+    "slug": "center",
+    "name": "센터커피",
+    "name_en": "Center Coffee",
+    "description": "라떼와 에스프레소용 묵직한 원두를 다루는 샘플 로스터리입니다.",
+    "website_url": "https://example.com/center",
+    "logo_url": null,
+    "location": {
+      "country": "Korea",
+      "city": "Seoul",
+      "address": null
+    },
+    "social_links": {
+      "instagram": null,
+      "youtube": null
+    },
+    "created_at": "2026-05-08T12:00:00+09:00",
+    "updated_at": "2026-05-08T12:00:00+09:00"
+  }
+]

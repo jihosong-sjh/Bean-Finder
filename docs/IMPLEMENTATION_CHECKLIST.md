@@ -32,9 +32,9 @@
 
 | 항목 | 값 |
 | --- | --- |
-| 현재 마일스톤 | M0 |
+| 현재 마일스톤 | M2 |
 | 전체 작업 수 | 101 |
-| 완료 작업 수 | 7 |
+| 완료 작업 수 | 20 |
 | 진행 중 작업 수 | 0 |
 | 블로커 수 | 0 |
 | 마지막 업데이트 | 2026-05-08 |
@@ -42,7 +42,7 @@
 ## 3. 마일스톤 현황
 
 - [x] M0 프로젝트 기반 준비
-- [ ] M1 데이터 기반 구축
+- [x] M1 데이터 기반 구축
 - [ ] M2 검색 도메인 구현
 - [ ] M3 API 계층 구현
 - [ ] M4 핵심 화면 구현
@@ -57,13 +57,19 @@
 
 | ID | 작업 | 상태 | 담당 | 메모 |
 | --- | --- | --- | --- | --- |
-| IMP-001 | 프론트엔드 프로젝트 생성 | 완료 | Codex | Vite + React 앱 생성 |
-| IMP-002 | TypeScript 설정 | 완료 | Codex | strict TypeScript, app/node tsconfig 분리 |
-| IMP-003 | 라우팅 구조 생성 | 완료 | Codex | MVP 라우트 placeholder 연결 |
-| IMP-004 | lint/format 설정 | 완료 | Codex | ESLint flat config, Prettier 설정 |
-| IMP-005 | 테스트 러너 설정 | 완료 | Codex | Vitest + Testing Library + jsdom 설정 |
-| IMP-006 | 기본 레이아웃과 상단 내비게이션 틀 구현 | 완료 | Codex | 공통 header/search/nav layout 적용 |
-| IMP-007 | 공통 오류/로딩 상태 컴포넌트 생성 | 완료 | Codex | ErrorState, LoadingState 생성 |
+| IMP-008 | `Bean`, `Roastery`, `TastingNote`, `Category`, `Ranking` 타입 정의 | 완료 | Codex | `src/features/*/*.types.ts` |
+| IMP-009 | JSON 데이터 파일 구조 생성 | 완료 | Codex | `data/*.json` |
+| IMP-010 | 샘플 로스터리 데이터 작성 | 완료 | Codex | 5개 로스터리 |
+| IMP-011 | 샘플 컵노트 사전 작성 | 완료 | Codex | 18개 표준 컵노트 |
+| IMP-012 | 샘플 원두 30-50개 작성 | 완료 | Codex | 30개 원두, 필수 케이스 포함 |
+| IMP-013 | 카테고리 JSON 작성 | 완료 | Codex | 9개 MVP 카테고리 |
+| IMP-014 | 랭킹 JSON 작성 | 완료 | Codex | 7개 MVP 랭킹 |
+| IMP-015 | 데이터 검증 schema 작성 | 완료 | Codex | Zod schema |
+| IMP-016 | 데이터 검증 스크립트 작성 | 완료 | Codex | `npm run validate:data` |
+| IMP-017 | `price_per_100g` 계산 함수 작성 | 완료 | Codex | repository enrichment에서 계산 |
+| IMP-018 | `easy_taste_tags` 생성 함수 작성 | 완료 | Codex | 점수/컵노트/추출방식 기반 생성 |
+| IMP-019 | `search_text` 생성 함수 작성 | 완료 | Codex | 검색 대상 필드 정규화 |
+| IMP-020 | 데이터 로딩 repository 작성 | 완료 | Codex | `loadBeanData`, `findBeanById` |
 
 ## 5. 블로커 로그
 
@@ -79,6 +85,7 @@
 | DEC-002 | 2026-05-08 | 비교함은 localStorage 사용 | 로그인 없는 MVP에 적합 | TECHNICAL_DESIGN.md |
 | DEC-003 | 2026-05-08 | 카테고리와 랭킹은 조건 기반 view로 계산 | 데이터 중복 감소 | DATA_SPEC.md |
 | DEC-004 | 2026-05-08 | M0 프론트엔드는 Vite + React + TypeScript로 시작 | 문서의 React 기반 권장안에 맞고 MVP skeleton 구축이 빠름 | TECHNICAL_DESIGN.md, IMPLEMENTATION_PLAN.md |
+| DEC-005 | 2026-05-08 | 원본 JSON에는 입력 필드만 저장하고 파생 필드는 repository에서 계산 | 데이터 입력 오류를 줄이고 `price_per_100g`, `easy_taste_tags`, `search_text` 일관성을 보장 | DATA_SPEC.md, DATA_ENTRY_GUIDE.md |
 
 ## 7. M0 프로젝트 기반 준비
 
@@ -107,26 +114,26 @@
 
 | 완료 | ID | 우선순위 | 작업 | 상태 |
 | --- | --- | --- | --- | --- |
-| [ ] | IMP-008 | P0 | `Bean`, `Roastery`, `TastingNote`, `Category`, `Ranking` 타입 정의 | 대기 |
-| [ ] | IMP-009 | P0 | JSON 데이터 파일 구조 생성 | 대기 |
-| [ ] | IMP-010 | P0 | 샘플 로스터리 데이터 작성 | 대기 |
-| [ ] | IMP-011 | P0 | 샘플 컵노트 사전 작성 | 대기 |
-| [ ] | IMP-012 | P0 | 샘플 원두 30-50개 작성 | 대기 |
-| [ ] | IMP-013 | P1 | 카테고리 JSON 작성 | 대기 |
-| [ ] | IMP-014 | P1 | 랭킹 JSON 작성 | 대기 |
-| [ ] | IMP-015 | P0 | 데이터 검증 schema 작성 | 대기 |
-| [ ] | IMP-016 | P0 | 데이터 검증 스크립트 작성 | 대기 |
-| [ ] | IMP-017 | P0 | `price_per_100g` 계산 함수 작성 | 대기 |
-| [ ] | IMP-018 | P0 | `easy_taste_tags` 생성 함수 작성 | 대기 |
-| [ ] | IMP-019 | P0 | `search_text` 생성 함수 작성 | 대기 |
-| [ ] | IMP-020 | P0 | 데이터 로딩 repository 작성 | 대기 |
+| [x] | IMP-008 | P0 | `Bean`, `Roastery`, `TastingNote`, `Category`, `Ranking` 타입 정의 | 완료 |
+| [x] | IMP-009 | P0 | JSON 데이터 파일 구조 생성 | 완료 |
+| [x] | IMP-010 | P0 | 샘플 로스터리 데이터 작성 | 완료 |
+| [x] | IMP-011 | P0 | 샘플 컵노트 사전 작성 | 완료 |
+| [x] | IMP-012 | P0 | 샘플 원두 30-50개 작성 | 완료 |
+| [x] | IMP-013 | P1 | 카테고리 JSON 작성 | 완료 |
+| [x] | IMP-014 | P1 | 랭킹 JSON 작성 | 완료 |
+| [x] | IMP-015 | P0 | 데이터 검증 schema 작성 | 완료 |
+| [x] | IMP-016 | P0 | 데이터 검증 스크립트 작성 | 완료 |
+| [x] | IMP-017 | P0 | `price_per_100g` 계산 함수 작성 | 완료 |
+| [x] | IMP-018 | P0 | `easy_taste_tags` 생성 함수 작성 | 완료 |
+| [x] | IMP-019 | P0 | `search_text` 생성 함수 작성 | 완료 |
+| [x] | IMP-020 | P0 | 데이터 로딩 repository 작성 | 완료 |
 
 완료 기준:
 
-- [ ] 데이터 검증 스크립트가 통과한다.
-- [ ] 모든 원두의 `price_per_100g`이 계산된다.
-- [ ] 모든 원두에 `search_text`가 생성된다.
-- [ ] 필수 필드 누락 데이터가 검증 실패한다.
+- [x] 데이터 검증 스크립트가 통과한다.
+- [x] 모든 원두의 `price_per_100g`이 계산된다.
+- [x] 모든 원두에 `search_text`가 생성된다.
+- [x] 필수 필드 누락 데이터가 검증 실패한다.
 
 ## 9. M2 검색 도메인 구현
 
